@@ -1,10 +1,10 @@
 # DPD-Net
 Dual-path Proposal Discriminative Network for abnormal cell detection in cervical liquid-based cytology images.
 
-Framework:
+**Framework:**
 ![](./demo/Fig1.png)
 
-Source Code Project:
+**Source Code Project:**
 
 --checkpoints:  to save output files (checkpoints, tensorboard, log files, etc.) and pretrained models.
 
@@ -18,7 +18,7 @@ Source Code Project:
 
 --utils:        calculation of Proposal Contrastive Loss (PCL).
 
-Demo:
+**Demo:**
 
 input images & output images:
 
