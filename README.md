@@ -5,6 +5,7 @@ Framework:
 ![](./demo/Fig1.png)
 
 Source Code Project:
+
 --checkpoints:  to save output files (checkpoints, tensorboard, log files, etc.) and pretrained models.
 
 --demo:         input and output images for "demo.py"
@@ -18,6 +19,7 @@ Source Code Project:
 --utils:        calculation of Proposal Contrastive Loss (PCL).
 
 Demo:
+
 input images & output images:
 
 ![](./demo/input/156_1_1_0.jpg) ![](./demo/output/156_1_1_0.jpg) 
