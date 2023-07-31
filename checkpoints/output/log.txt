@@ -1,0 +1,1737 @@
+[03/20 21:02:31] detectron2 INFO: Rank of current process: 0. World size: 4
+[03/20 21:02:32] detectron2 INFO: Environment info:
+----------------------  ------------------------------------------------------------------------------------------------
+sys.platform            linux
+Python                  3.7.13 (default, Mar 29 2022, 02:18:16) [GCC 7.5.0]
+numpy                   1.21.6
+detectron2              0.6 @/data/data4/master1/CSY/RetinaNet/detectron2/detectron2
+Compiler                GCC 9.4
+CUDA compiler           CUDA 11.1
+detectron2 arch flags   7.5
+DETECTRON2_ENV_MODULE   <not set>
+PyTorch                 1.9.0+cu111 @/home/master1/anaconda3/envs/env_retinanet/lib/python3.7/site-packages/torch
+PyTorch debug build     False
+GPU available           Yes
+GPU 0,1,2,3,4           NVIDIA GeForce RTX 2080 Ti (arch=7.5)
+Driver version          470.86
+CUDA_HOME               /usr/local/cuda
+Pillow                  9.1.1
+torchvision             0.10.0+cu111 @/home/master1/anaconda3/envs/env_retinanet/lib/python3.7/site-packages/torchvision
+torchvision arch flags  3.5, 5.0, 6.0, 7.0, 7.5, 8.0, 8.6
+fvcore                  0.1.5.post20220512
+iopath                  0.1.9
+cv2                     4.5.5
+----------------------  ------------------------------------------------------------------------------------------------
+PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) Math Kernel Library Version 2020.0.0 Product Build 20191122 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v2.1.2 (Git Hash 98be7e8afa711dc9b66c8ff3504129cb82013cdb)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.9.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+[03/20 21:02:32] detectron2 INFO: Command line arguments: Namespace(config_file='../configs/COCO-Detection/faster_rcnn_R_50_FPN_1x.yaml', dist_url='tcp://127.0.0.1:50156', eval_only=False, machine_rank=0, num_gpus=4, num_machines=1, opts=[], resume=False)
+[03/20 21:02:32] detectron2 INFO: Contents of args.config_file=../configs/COCO-Detection/faster_rcnn_R_50_FPN_1x.yaml:
+_BASE_: "../Base-RCNN-FPN.yaml"
+MODEL:
+  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  MASK_ON: False
+  RESNETS:
+    DEPTH: 50
+
+[03/20 21:02:32] detectron2 INFO: Running with full config:
+CUDNN_BENCHMARK: false
+DATALOADER:
+  ASPECT_RATIO_GROUPING: true
+  FILTER_EMPTY_ANNOTATIONS: true
+  NUM_WORKERS: 1
+  REPEAT_THRESHOLD: 0.0
+  SAMPLER_TRAIN: TrainingSampler
+DATASETS:
+  PRECOMPUTED_PROPOSAL_TOPK_TEST: 1000
+  PRECOMPUTED_PROPOSAL_TOPK_TRAIN: 2000
+  PROPOSAL_FILES_TEST: []
+  PROPOSAL_FILES_TRAIN: []
+  TEST:
+  - coco_my_val
+  TRAIN:
+  - coco_my_train
+GLOBAL:
+  HACK: 1.0
+INPUT:
+  CROP:
+    ENABLED: true
+    SIZE:
+    - 0.9
+    - 0.9
+    TYPE: relative_range
+  FORMAT: BGR
+  MASK_FORMAT: polygon
+  MAX_SIZE_TEST: 1000
+  MAX_SIZE_TRAIN: 1000
+  MIN_SIZE_TEST: 800
+  MIN_SIZE_TRAIN:
+  - 800
+  - 1200
+  MIN_SIZE_TRAIN_SAMPLING: range
+  RANDOM_FLIP: horizontal
+MODEL:
+  ANCHOR_GENERATOR:
+    ANGLES:
+    - - -90
+      - 0
+      - 90
+    ASPECT_RATIOS:
+    - - 0.5
+      - 1.0
+      - 2.0
+    NAME: DefaultAnchorGenerator
+    OFFSET: 0.0
+    SIZES:
+    - - 32
+    - - 64
+    - - 128
+    - - 256
+    - - 512
+  BACKBONE:
+    FREEZE_AT: 2
+    NAME: build_resnet_att_fpn_backbone
+  DEVICE: cuda
+  FPN:
+    FUSE_TYPE: sum
+    IN_FEATURES:
+    - res2
+    - res3
+    - res4
+    - res5
+    NORM: ''
+    OUT_CHANNELS: 256
+  KEYPOINT_ON: false
+  LOAD_PROPOSALS: false
+  MASK_ON: false
+  META_ARCHITECTURE: MyCellRCNN
+  PANOPTIC_FPN:
+    COMBINE:
+      ENABLED: true
+      INSTANCES_CONFIDENCE_THRESH: 0.5
+      OVERLAP_THRESH: 0.5
+      STUFF_AREA_LIMIT: 4096
+    INSTANCE_LOSS_WEIGHT: 1.0
+  PIXEL_MEAN:
+  - 103.53
+  - 116.28
+  - 123.675
+  PIXEL_STD:
+  - 1.0
+  - 1.0
+  - 1.0
+  PROPOSAL_GENERATOR:
+    MIN_SIZE: 0
+    NAME: RPN
+  RESNETS:
+    DEFORM_MODULATED: false
+    DEFORM_NUM_GROUPS: 1
+    DEFORM_ON_PER_STAGE:
+    - false
+    - false
+    - false
+    - false
+    DEPTH: 50
+    NORM: FrozenBN
+    NUM_GROUPS: 1
+    OUT_FEATURES:
+    - res2
+    - res3
+    - res4
+    - res5
+    RES2_OUT_CHANNELS: 256
+    RES5_DILATION: 1
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: true
+    WIDTH_PER_GROUP: 64
+  RETINANET:
+    BBOX_REG_LOSS_TYPE: smooth_l1
+    BBOX_REG_WEIGHTS: &id001
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    FOCAL_LOSS_ALPHA: 0.25
+    FOCAL_LOSS_GAMMA: 2.0
+    IN_FEATURES:
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    IOU_LABELS:
+    - 0
+    - -1
+    - 1
+    IOU_THRESHOLDS:
+    - 0.4
+    - 0.5
+    NMS_THRESH_TEST: 0.5
+    NORM: ''
+    NUM_CLASSES: 80
+    NUM_CONVS: 4
+    PRIOR_PROB: 0.01
+    SCORE_THRESH_TEST: 0.05
+    SMOOTH_L1_LOSS_BETA: 0.1
+    TOPK_CANDIDATES_TEST: 1000
+  ROI_BOX_CASCADE_HEAD:
+    BBOX_REG_WEIGHTS:
+    - - 10.0
+      - 10.0
+      - 5.0
+      - 5.0
+    - - 20.0
+      - 20.0
+      - 10.0
+      - 10.0
+    - - 30.0
+      - 30.0
+      - 15.0
+      - 15.0
+    IOUS:
+    - 0.5
+    - 0.6
+    - 0.7
+  ROI_BOX_HEAD:
+    BBOX_REG_LOSS_TYPE: smooth_l1
+    BBOX_REG_LOSS_WEIGHT: 1.0
+    BBOX_REG_WEIGHTS:
+    - 10.0
+    - 10.0
+    - 5.0
+    - 5.0
+    CLS_AGNOSTIC_BBOX_REG: false
+    CONV_DIM: 256
+    FC_DIM: 1024
+    FED_LOSS_FREQ_WEIGHT_POWER: 0.5
+    FED_LOSS_NUM_CLASSES: 50
+    NAME: FastRCNNConvFCHead
+    NORM: ''
+    NUM_CONV: 0
+    NUM_FC: 2
+    POOLER_RESOLUTION: 7
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_TYPE: ROIAlignV2
+    SMOOTH_L1_BETA: 0.0
+    TRAIN_ON_PRED_BOXES: false
+    USE_FED_LOSS: false
+    USE_SIGMOID_CE: false
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 512
+    IN_FEATURES:
+    - p2
+    - p3
+    - p4
+    - p5
+    IOU_LABELS:
+    - 0
+    - 1
+    IOU_THRESHOLDS:
+    - 0.5
+    NAME: RelationROIHeads
+    NMS_THRESH_TEST: 0.5
+    NUM_CLASSES: 1
+    POSITIVE_FRACTION: 0.25
+    PROPOSAL_APPEND_GT: true
+    SCORE_THRESH_TEST: 0.05
+  ROI_KEYPOINT_HEAD:
+    CONV_DIMS:
+    - 512
+    - 512
+    - 512
+    - 512
+    - 512
+    - 512
+    - 512
+    - 512
+    LOSS_WEIGHT: 1.0
+    MIN_KEYPOINTS_PER_IMAGE: 1
+    NAME: KRCNNConvDeconvUpsampleHead
+    NORMALIZE_LOSS_BY_VISIBLE_KEYPOINTS: true
+    NUM_KEYPOINTS: 17
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_TYPE: ROIAlignV2
+  ROI_MASK_HEAD:
+    CLS_AGNOSTIC_MASK: false
+    CONV_DIM: 256
+    NAME: MaskRCNNConvUpsampleHead
+    NORM: ''
+    NUM_CONV: 4
+    POOLER_RESOLUTION: 14
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_TYPE: ROIAlignV2
+  RPN:
+    BATCH_SIZE_PER_IMAGE: 256
+    BBOX_REG_LOSS_TYPE: smooth_l1
+    BBOX_REG_LOSS_WEIGHT: 1.0
+    BBOX_REG_WEIGHTS: *id001
+    BOUNDARY_THRESH: -1
+    CONV_DIMS:
+    - -1
+    HEAD_NAME: StandardRPNHead
+    IN_FEATURES:
+    - p2
+    - p3
+    - p4
+    - p5
+    - p6
+    IOU_LABELS:
+    - 0
+    - -1
+    - 1
+    IOU_THRESHOLDS:
+    - 0.3
+    - 0.7
+    LOSS_WEIGHT: 1.0
+    NMS_THRESH: 0.7
+    POSITIVE_FRACTION: 0.5
+    POST_NMS_TOPK_TEST: 1000
+    POST_NMS_TOPK_TRAIN: 1000
+    PRE_NMS_TOPK_TEST: 1000
+    PRE_NMS_TOPK_TRAIN: 2000
+    SMOOTH_L1_BETA: 0.0
+  SEM_SEG_HEAD:
+    COMMON_STRIDE: 4
+    CONVS_DIM: 128
+    IGNORE_VALUE: 255
+    IN_FEATURES:
+    - p2
+    - p3
+    - p4
+    - p5
+    LOSS_WEIGHT: 1.0
+    NAME: SemSegFPNHead
+    NORM: GN
+    NUM_CLASSES: 54
+  WEIGHTS: ../pretrained/faster_rcnn_R_50_FPN_1x-137257794.pkl
+OUTPUT_DIR: ./output/
+SEED: -1
+SOLVER:
+  AMP:
+    ENABLED: false
+  BASE_LR: 0.004
+  BASE_LR_END: 0.0
+  BIAS_LR_FACTOR: 1.0
+  CHECKPOINT_PERIOD: 208
+  CLIP_GRADIENTS:
+    CLIP_TYPE: value
+    CLIP_VALUE: 1.0
+    ENABLED: false
+    NORM_TYPE: 2.0
+  GAMMA: 0.1
+  IMS_PER_BATCH: 16
+  LR_SCHEDULER_NAME: WarmupMultiStepLR
+  MAX_ITER: 5224
+  MOMENTUM: 0.9
+  NESTEROV: false
+  REFERENCE_WORLD_SIZE: 0
+  STEPS:
+  - 2508
+  - 4389
+  WARMUP_FACTOR: 0.001
+  WARMUP_ITERS: 500
+  WARMUP_METHOD: linear
+  WEIGHT_DECAY: 0.0001
+  WEIGHT_DECAY_BIAS: null
+  WEIGHT_DECAY_NORM: 0.0
+TEST:
+  AUG:
+    ENABLED: false
+    FLIP: true
+    MAX_SIZE: 4000
+    MIN_SIZES:
+    - 400
+    - 500
+    - 600
+    - 700
+    - 800
+    - 900
+    - 1000
+    - 1100
+    - 1200
+  DETECTIONS_PER_IMAGE: 100
+  EVAL_PERIOD: 209
+  EXPECTED_RESULTS: []
+  KEYPOINT_OKS_SIGMAS: []
+  PRECISE_BN:
+    ENABLED: false
+    NUM_ITER: 200
+VERSION: 2
+VIS_PERIOD: 100
+
+[03/20 21:02:32] detectron2 INFO: Full config saved to ./output/config.yaml
+[03/20 21:02:32] d2.utils.env INFO: Using a generated random seed 33434571
+[03/20 21:02:33] d2.engine.defaults INFO: Model:
+MyCellRCNN(
+  (backbone): attFPN(
+    (fpn_lateral2): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+    (fpn_output2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (fpn_lateral3): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1))
+    (fpn_output3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (fpn_lateral4): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1))
+    (fpn_output4): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (fpn_lateral5): Conv2d(2048, 256, kernel_size=(1, 1), stride=(1, 1))
+    (fpn_output5): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (top_block): LastLevelMaxPool()
+    (bottom_up): ResNet(
+      (stem): BasicStem(
+        (conv1): Conv2d(
+          3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False
+          (norm): FrozenBatchNorm2d(num_features=64, eps=1e-05)
+        )
+      )
+      (res2): Sequential(
+        (0): BottleneckBlock(
+          (shortcut): Conv2d(
+            64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv1): Conv2d(
+            64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=64, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=64, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+        )
+        (1): BottleneckBlock(
+          (conv1): Conv2d(
+            256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=64, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=64, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+        )
+        (2): BottleneckBlock(
+          (conv1): Conv2d(
+            256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=64, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=64, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+        )
+      )
+      (res3): Sequential(
+        (0): BottleneckBlock(
+          (shortcut): Conv2d(
+            256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+          (conv1): Conv2d(
+            256, 128, kernel_size=(1, 1), stride=(2, 2), bias=False
+            (norm): FrozenBatchNorm2d(num_features=128, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=128, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+        )
+        (1): BottleneckBlock(
+          (conv1): Conv2d(
+            512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=128, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=128, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+        )
+        (2): BottleneckBlock(
+          (conv1): Conv2d(
+            512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=128, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=128, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+        )
+        (3): BottleneckBlock(
+          (conv1): Conv2d(
+            512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=128, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=128, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+        )
+      )
+      (res4): Sequential(
+        (0): BottleneckBlock(
+          (shortcut): Conv2d(
+            512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False
+            (norm): FrozenBatchNorm2d(num_features=1024, eps=1e-05)
+          )
+          (conv1): Conv2d(
+            512, 256, kernel_size=(1, 1), stride=(2, 2), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=1024, eps=1e-05)
+          )
+        )
+        (1): BottleneckBlock(
+          (conv1): Conv2d(
+            1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=1024, eps=1e-05)
+          )
+        )
+        (2): BottleneckBlock(
+          (conv1): Conv2d(
+            1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=1024, eps=1e-05)
+          )
+        )
+        (3): BottleneckBlock(
+          (conv1): Conv2d(
+            1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=1024, eps=1e-05)
+          )
+        )
+        (4): BottleneckBlock(
+          (conv1): Conv2d(
+            1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=1024, eps=1e-05)
+          )
+        )
+        (5): BottleneckBlock(
+          (conv1): Conv2d(
+            1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=256, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=1024, eps=1e-05)
+          )
+        )
+      )
+      (res5): Sequential(
+        (0): BottleneckBlock(
+          (shortcut): Conv2d(
+            1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False
+            (norm): FrozenBatchNorm2d(num_features=2048, eps=1e-05)
+          )
+          (conv1): Conv2d(
+            1024, 512, kernel_size=(1, 1), stride=(2, 2), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=2048, eps=1e-05)
+          )
+        )
+        (1): BottleneckBlock(
+          (conv1): Conv2d(
+            2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=2048, eps=1e-05)
+          )
+        )
+        (2): BottleneckBlock(
+          (conv1): Conv2d(
+            2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+          (conv2): Conv2d(
+            512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=512, eps=1e-05)
+          )
+          (conv3): Conv2d(
+            512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False
+            (norm): FrozenBatchNorm2d(num_features=2048, eps=1e-05)
+          )
+        )
+      )
+    )
+    (fpn_attention_c2): ChannelAttBlock(
+      (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (maxpool): AdaptiveMaxPool2d(output_size=(1, 1))
+      (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+      (linear1): Linear(in_features=256, out_features=32, bias=True)
+      (relu): ReLU()
+      (linear2): Linear(in_features=32, out_features=256, bias=True)
+    )
+    (fpn_attention_c3): ChannelAttBlock(
+      (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (maxpool): AdaptiveMaxPool2d(output_size=(1, 1))
+      (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+      (linear1): Linear(in_features=256, out_features=32, bias=True)
+      (relu): ReLU()
+      (linear2): Linear(in_features=32, out_features=256, bias=True)
+    )
+    (fpn_attention_c4): ChannelAttBlock(
+      (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (maxpool): AdaptiveMaxPool2d(output_size=(1, 1))
+      (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+      (linear1): Linear(in_features=256, out_features=32, bias=True)
+      (relu): ReLU()
+      (linear2): Linear(in_features=32, out_features=256, bias=True)
+    )
+    (fpn_attention_c5): ChannelAttBlock(
+      (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (maxpool): AdaptiveMaxPool2d(output_size=(1, 1))
+      (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+      (linear1): Linear(in_features=256, out_features=32, bias=True)
+      (relu): ReLU()
+      (linear2): Linear(in_features=32, out_features=256, bias=True)
+    )
+    (fpn_attention_s2): SpatialAttBlock(
+      (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+    )
+    (fpn_attention_s3): SpatialAttBlock(
+      (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+    )
+    (fpn_attention_s4): SpatialAttBlock(
+      (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+    )
+    (fpn_attention_s5): SpatialAttBlock(
+      (conv): Conv2d(2, 1, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), bias=False)
+    )
+  )
+  (proposal_generator): RPN(
+    (rpn_head): StandardRPNHead(
+      (conv): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+        (activation): ReLU()
+      )
+      (objectness_logits): Conv2d(256, 3, kernel_size=(1, 1), stride=(1, 1))
+      (anchor_deltas): Conv2d(256, 12, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (anchor_generator): DefaultAnchorGenerator(
+      (cell_anchors): BufferList()
+    )
+  )
+  (roi_heads): RelationROIHeads(
+    (box_pooler): ROIPooler(
+      (level_poolers): ModuleList(
+        (0): ROIAlign(output_size=(7, 7), spatial_scale=0.25, sampling_ratio=0, aligned=True)
+        (1): ROIAlign(output_size=(7, 7), spatial_scale=0.125, sampling_ratio=0, aligned=True)
+        (2): ROIAlign(output_size=(7, 7), spatial_scale=0.0625, sampling_ratio=0, aligned=True)
+        (3): ROIAlign(output_size=(7, 7), spatial_scale=0.03125, sampling_ratio=0, aligned=True)
+      )
+    )
+    (box_head): FastRCNNConvFCHead(
+      (flatten): Flatten(start_dim=1, end_dim=-1)
+      (fc1): Linear(in_features=12544, out_features=1024, bias=True)
+      (fc_relu1): ReLU()
+      (fc2): Linear(in_features=1024, out_features=1024, bias=True)
+      (fc_relu2): ReLU()
+    )
+    (box_predictor): FastRCNNOutputLayers(
+      (cls_score): Linear(in_features=1024, out_features=2, bias=True)
+      (bbox_pred): Linear(in_features=1024, out_features=4, bias=True)
+    )
+    (relation_module0): RelationModule(
+      (trans_norm): BatchNorm1d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (query): Linear(in_features=1024, out_features=256, bias=True)
+      (key): Linear(in_features=1024, out_features=256, bias=True)
+      (value): Linear(in_features=1024, out_features=256, bias=True)
+      (dropout_q): Dropout(p=0.5, inplace=False)
+      (dropout_k): Dropout(p=0.5, inplace=False)
+      (dropout_v): Dropout(p=0.5, inplace=False)
+      (out_norm): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relative): Linear(in_features=128, out_features=1, bias=True)
+      (dropout_r): Dropout(p=0.5, inplace=False)
+    )
+    (relation_module1): RelationModule(
+      (trans_norm): BatchNorm1d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (query): Linear(in_features=1024, out_features=256, bias=True)
+      (key): Linear(in_features=1024, out_features=256, bias=True)
+      (value): Linear(in_features=1024, out_features=256, bias=True)
+      (dropout_q): Dropout(p=0.5, inplace=False)
+      (dropout_k): Dropout(p=0.5, inplace=False)
+      (dropout_v): Dropout(p=0.5, inplace=False)
+      (out_norm): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relative): Linear(in_features=128, out_features=1, bias=True)
+      (dropout_r): Dropout(p=0.5, inplace=False)
+    )
+    (relation_module2): RelationModule(
+      (trans_norm): BatchNorm1d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (query): Linear(in_features=1024, out_features=256, bias=True)
+      (key): Linear(in_features=1024, out_features=256, bias=True)
+      (value): Linear(in_features=1024, out_features=256, bias=True)
+      (dropout_q): Dropout(p=0.5, inplace=False)
+      (dropout_k): Dropout(p=0.5, inplace=False)
+      (dropout_v): Dropout(p=0.5, inplace=False)
+      (out_norm): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relative): Linear(in_features=128, out_features=1, bias=True)
+      (dropout_r): Dropout(p=0.5, inplace=False)
+    )
+    (relation_module3): RelationModule(
+      (trans_norm): BatchNorm1d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (query): Linear(in_features=1024, out_features=256, bias=True)
+      (key): Linear(in_features=1024, out_features=256, bias=True)
+      (value): Linear(in_features=1024, out_features=256, bias=True)
+      (dropout_q): Dropout(p=0.5, inplace=False)
+      (dropout_k): Dropout(p=0.5, inplace=False)
+      (dropout_v): Dropout(p=0.5, inplace=False)
+      (out_norm): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relative): Linear(in_features=128, out_features=1, bias=True)
+      (dropout_r): Dropout(p=0.5, inplace=False)
+    )
+  )
+)
+[03/20 21:02:33] d2.data.datasets.coco INFO: Loaded 3345 images in COCO format from ../../coco/annotations/anno_train.json
+[03/20 21:02:33] d2.data.build INFO: Removed 0 images with no usable annotations. 3345 images left.
+[03/20 21:02:33] d2.data.build INFO: Distribution of instances among all 1 categories:
+[36m|  category  | #instances   |
+|:----------:|:-------------|
+|    pos     | 5833         |
+|            |              |[0m
+[03/20 21:02:33] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in training: [RandomCrop(crop_type='relative_range', crop_size=[0.9, 0.9]), ResizeShortestEdge(short_edge_length=(800, 1200), max_size=1000), RandomFlip()]
+[03/20 21:02:33] d2.data.build INFO: Using training sampler TrainingSampler
+[03/20 21:02:34] d2.data.common INFO: Serializing 3345 elements to byte tensors and concatenating them all ...
+[03/20 21:02:34] d2.data.common INFO: Serialized dataset takes 1.46 MiB
+[03/20 21:02:36] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:02:36] d2.data.build INFO: Removed 0 images with no usable annotations. 859 images left.
+[03/20 21:02:36] d2.data.build INFO: Distribution of instances among all 1 categories:
+[36m|  category  | #instances   |
+|:----------:|:-------------|
+|    pos     | 1190         |
+|            |              |[0m
+[03/20 21:02:36] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in training: [RandomCrop(crop_type='relative_range', crop_size=[0.9, 0.9]), ResizeShortestEdge(short_edge_length=(800, 1200), max_size=1000), RandomFlip()]
+[03/20 21:02:36] d2.data.build INFO: Using training sampler TrainingSampler
+[03/20 21:02:36] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:02:36] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:02:36] fvcore.common.checkpoint INFO: [Checkpointer] Loading from ../pretrained/faster_rcnn_R_50_FPN_1x-137257794.pkl ...
+[03/20 21:02:36] fvcore.common.checkpoint INFO: Reading a file from 'Detectron2 Model Zoo'
+[03/20 21:02:36] fvcore.common.checkpoint WARNING: Skip loading parameter 'roi_heads.box_predictor.cls_score.weight' to the model due to incompatible shapes: (81, 1024) in the checkpoint but (2, 1024) in the model! You might want to double check if this is expected.
+[03/20 21:02:36] fvcore.common.checkpoint WARNING: Skip loading parameter 'roi_heads.box_predictor.cls_score.bias' to the model due to incompatible shapes: (81,) in the checkpoint but (2,) in the model! You might want to double check if this is expected.
+[03/20 21:02:36] fvcore.common.checkpoint WARNING: Skip loading parameter 'roi_heads.box_predictor.bbox_pred.weight' to the model due to incompatible shapes: (320, 1024) in the checkpoint but (4, 1024) in the model! You might want to double check if this is expected.
+[03/20 21:02:36] fvcore.common.checkpoint WARNING: Skip loading parameter 'roi_heads.box_predictor.bbox_pred.bias' to the model due to incompatible shapes: (320,) in the checkpoint but (4,) in the model! You might want to double check if this is expected.
+[03/20 21:02:36] fvcore.common.checkpoint WARNING: Some model parameters or buffers are not found in the checkpoint:
+[34mbackbone.fpn_attention_c2.conv.weight[0m
+[34mbackbone.fpn_attention_c2.linear1.{bias, weight}[0m
+[34mbackbone.fpn_attention_c2.linear2.{bias, weight}[0m
+[34mbackbone.fpn_attention_c3.conv.weight[0m
+[34mbackbone.fpn_attention_c3.linear1.{bias, weight}[0m
+[34mbackbone.fpn_attention_c3.linear2.{bias, weight}[0m
+[34mbackbone.fpn_attention_c4.conv.weight[0m
+[34mbackbone.fpn_attention_c4.linear1.{bias, weight}[0m
+[34mbackbone.fpn_attention_c4.linear2.{bias, weight}[0m
+[34mbackbone.fpn_attention_c5.conv.weight[0m
+[34mbackbone.fpn_attention_c5.linear1.{bias, weight}[0m
+[34mbackbone.fpn_attention_c5.linear2.{bias, weight}[0m
+[34mbackbone.fpn_attention_s2.conv.weight[0m
+[34mbackbone.fpn_attention_s3.conv.weight[0m
+[34mbackbone.fpn_attention_s4.conv.weight[0m
+[34mbackbone.fpn_attention_s5.conv.weight[0m
+[34mroi_heads.box_predictor.bbox_pred.{bias, weight}[0m
+[34mroi_heads.box_predictor.cls_score.{bias, weight}[0m
+[34mroi_heads.relation_module0.key.{bias, weight}[0m
+[34mroi_heads.relation_module0.out_norm.{bias, running_mean, running_var, weight}[0m
+[34mroi_heads.relation_module0.query.{bias, weight}[0m
+[34mroi_heads.relation_module0.relative.{bias, weight}[0m
+[34mroi_heads.relation_module0.trans_norm.{bias, running_mean, running_var, weight}[0m
+[34mroi_heads.relation_module0.value.{bias, weight}[0m
+[34mroi_heads.relation_module1.key.{bias, weight}[0m
+[34mroi_heads.relation_module1.out_norm.{bias, running_mean, running_var, weight}[0m
+[34mroi_heads.relation_module1.query.{bias, weight}[0m
+[34mroi_heads.relation_module1.relative.{bias, weight}[0m
+[34mroi_heads.relation_module1.trans_norm.{bias, running_mean, running_var, weight}[0m
+[34mroi_heads.relation_module1.value.{bias, weight}[0m
+[34mroi_heads.relation_module2.key.{bias, weight}[0m
+[34mroi_heads.relation_module2.out_norm.{bias, running_mean, running_var, weight}[0m
+[34mroi_heads.relation_module2.query.{bias, weight}[0m
+[34mroi_heads.relation_module2.relative.{bias, weight}[0m
+[34mroi_heads.relation_module2.trans_norm.{bias, running_mean, running_var, weight}[0m
+[34mroi_heads.relation_module2.value.{bias, weight}[0m
+[34mroi_heads.relation_module3.key.{bias, weight}[0m
+[34mroi_heads.relation_module3.out_norm.{bias, running_mean, running_var, weight}[0m
+[34mroi_heads.relation_module3.query.{bias, weight}[0m
+[34mroi_heads.relation_module3.relative.{bias, weight}[0m
+[34mroi_heads.relation_module3.trans_norm.{bias, running_mean, running_var, weight}[0m
+[34mroi_heads.relation_module3.value.{bias, weight}[0m
+[03/20 21:02:36] d2.engine.train_loop INFO: Starting training from iteration 0
+[03/20 21:02:57] d2.utils.events INFO:  eta: 1:17:39  iter: 19  total_loss: 0.8643  loss_cls: 0.5246  loss_box_reg: 0.036  loss_contrastive: 0.09099  loss_rpn_cls: 0.1418  loss_rpn_loc: 0.02074  time: 0.9045  data_time: 0.2569  lr: 0.00015585  max_mem: 7901M
+[03/20 21:03:16] d2.utils.events INFO:  eta: 1:17:22  iter: 39  total_loss: 0.2525  loss_cls: 0.06712  loss_box_reg: 0.03181  loss_contrastive: 0.06812  loss_rpn_cls: 0.07873  loss_rpn_loc: 0.01591  time: 0.9088  data_time: 0.1952  lr: 0.00031569  max_mem: 7902M
+[03/20 21:03:34] d2.utils.events INFO:  eta: 1:17:04  iter: 59  total_loss: 0.2598  loss_cls: 0.07861  loss_box_reg: 0.04232  loss_contrastive: 0.03557  loss_rpn_cls: 0.0745  loss_rpn_loc: 0.01832  time: 0.9040  data_time: 0.1700  lr: 0.00047553  max_mem: 7902M
+[03/20 21:03:52] d2.utils.events INFO:  eta: 1:16:46  iter: 79  total_loss: 0.2458  loss_cls: 0.08519  loss_box_reg: 0.04869  loss_contrastive: 0.02541  loss_rpn_cls: 0.06562  loss_rpn_loc: 0.01579  time: 0.9011  data_time: 0.1705  lr: 0.00063537  max_mem: 7902M
+[03/20 21:04:12] d2.utils.events INFO:  eta: 1:16:33  iter: 99  total_loss: 0.2533  loss_cls: 0.09053  loss_box_reg: 0.05713  loss_contrastive: 0.02228  loss_rpn_cls: 0.061  loss_rpn_loc: 0.01506  total_val_loss: 0.2121  val_loss_box_reg: 0.05489  val_loss_cls: 0.08656  val_loss_contrastive: 0.02065  val_loss_rpn_cls: 0.03943  val_loss_rpn_loc: 0.01056  time: 0.9016  data_time: 0.1723  lr: 0.00079521  max_mem: 7902M
+[03/20 21:04:30] d2.utils.events INFO:  eta: 1:16:17  iter: 119  total_loss: 0.2478  loss_cls: 0.09017  loss_box_reg: 0.06217  loss_contrastive: 0.02108  loss_rpn_cls: 0.0574  loss_rpn_loc: 0.01433  time: 0.9035  data_time: 0.1776  lr: 0.00095505  max_mem: 7902M
+[03/20 21:04:49] d2.utils.events INFO:  eta: 1:16:01  iter: 139  total_loss: 0.2388  loss_cls: 0.0921  loss_box_reg: 0.06412  loss_contrastive: 0.01843  loss_rpn_cls: 0.04876  loss_rpn_loc: 0.0136  time: 0.9047  data_time: 0.1855  lr: 0.0011149  max_mem: 7902M
+[03/20 21:05:07] d2.utils.events INFO:  eta: 1:15:44  iter: 159  total_loss: 0.2673  loss_cls: 0.107  loss_box_reg: 0.07932  loss_contrastive: 0.0181  loss_rpn_cls: 0.04197  loss_rpn_loc: 0.0128  time: 0.9043  data_time: 0.1719  lr: 0.0012747  max_mem: 7902M
+[03/20 21:05:26] d2.utils.events INFO:  eta: 1:15:28  iter: 179  total_loss: 0.2765  loss_cls: 0.1125  loss_box_reg: 0.08923  loss_contrastive: 0.01794  loss_rpn_cls: 0.04399  loss_rpn_loc: 0.01306  time: 0.9046  data_time: 0.1785  lr: 0.0014346  max_mem: 7902M
+[03/20 21:05:44] d2.utils.events INFO:  eta: 1:15:11  iter: 199  total_loss: 0.2757  loss_cls: 0.1124  loss_box_reg: 0.09898  loss_contrastive: 0.01698  loss_rpn_cls: 0.03287  loss_rpn_loc: 0.01249  total_val_loss: 0.2689  val_loss_box_reg: 0.08857  val_loss_cls: 0.1114  val_loss_contrastive: 0.016  val_loss_rpn_cls: 0.04256  val_loss_rpn_loc: 0.01033  time: 0.9041  data_time: 0.1687  lr: 0.0015944  max_mem: 7902M
+[03/20 21:05:52] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0000207.pth
+[03/20 21:05:53] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:05:53] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:05:53] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:05:53] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:05:53] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:05:56] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0011 s/iter. Inference: 0.1369 s/iter. Eval: 0.0002 s/iter. Total: 0.1382 s/iter. ETA=0:00:28
+[03/20 21:06:01] d2.evaluation.evaluator INFO: Inference done 47/215. Dataloading: 0.0014 s/iter. Inference: 0.1387 s/iter. Eval: 0.0003 s/iter. Total: 0.1404 s/iter. ETA=0:00:23
+[03/20 21:06:06] d2.evaluation.evaluator INFO: Inference done 83/215. Dataloading: 0.0013 s/iter. Inference: 0.1386 s/iter. Eval: 0.0003 s/iter. Total: 0.1403 s/iter. ETA=0:00:18
+[03/20 21:06:11] d2.evaluation.evaluator INFO: Inference done 119/215. Dataloading: 0.0013 s/iter. Inference: 0.1387 s/iter. Eval: 0.0003 s/iter. Total: 0.1404 s/iter. ETA=0:00:13
+[03/20 21:06:16] d2.evaluation.evaluator INFO: Inference done 155/215. Dataloading: 0.0013 s/iter. Inference: 0.1384 s/iter. Eval: 0.0003 s/iter. Total: 0.1401 s/iter. ETA=0:00:08
+[03/20 21:06:21] d2.evaluation.evaluator INFO: Inference done 191/215. Dataloading: 0.0013 s/iter. Inference: 0.1385 s/iter. Eval: 0.0003 s/iter. Total: 0.1401 s/iter. ETA=0:00:03
+[03/20 21:06:25] d2.evaluation.evaluator INFO: Total inference time: 0:00:29.673675 (0.141303 s / iter per device, on 4 devices)
+[03/20 21:06:25] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.138675 s / iter per device, on 4 devices)
+[03/20 21:06:26] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:06:26] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:06:26] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:06:30] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl  |
+|:-----:|:------:|:------:|:-----:|:-----:|:-----:|
+| 1.005 | 3.904  | 0.138  | 0.000 | 0.844 | 1.308 |
+[03/20 21:06:30] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:06:30] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:06:30] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:06:30] d2.evaluation.testing INFO: copypaste: 1.0050,3.9042,0.1378,0.0000,0.8437,1.3077
+[03/20 21:06:40] d2.utils.events INFO:  eta: 1:14:52  iter: 219  total_loss: 0.2942  loss_cls: 0.1191  loss_box_reg: 0.09592  loss_contrastive: 0.01669  loss_rpn_cls: 0.04282  loss_rpn_loc: 0.01339  time: 0.9046  data_time: 0.1733  lr: 0.0017542  max_mem: 7902M
+[03/20 21:06:59] d2.utils.events INFO:  eta: 1:14:33  iter: 239  total_loss: 0.2851  loss_cls: 0.1155  loss_box_reg: 0.1019  loss_contrastive: 0.01721  loss_rpn_cls: 0.03674  loss_rpn_loc: 0.01301  time: 0.9054  data_time: 0.1896  lr: 0.0019141  max_mem: 7902M
+[03/20 21:07:17] d2.utils.events INFO:  eta: 1:14:15  iter: 259  total_loss: 0.31  loss_cls: 0.1251  loss_box_reg: 0.1234  loss_contrastive: 0.01617  loss_rpn_cls: 0.03776  loss_rpn_loc: 0.01224  time: 0.9048  data_time: 0.1736  lr: 0.0020739  max_mem: 7902M
+[03/20 21:07:35] d2.utils.events INFO:  eta: 1:13:58  iter: 279  total_loss: 0.3161  loss_cls: 0.1279  loss_box_reg: 0.1232  loss_contrastive: 0.0162  loss_rpn_cls: 0.02965  loss_rpn_loc: 0.01132  time: 0.9044  data_time: 0.1721  lr: 0.0022338  max_mem: 7902M
+[03/20 21:07:54] d2.utils.events INFO:  eta: 1:13:39  iter: 299  total_loss: 0.2847  loss_cls: 0.1149  loss_box_reg: 0.1113  loss_contrastive: 0.01684  loss_rpn_cls: 0.02804  loss_rpn_loc: 0.01147  total_val_loss: 0.2561  val_loss_box_reg: 0.1032  val_loss_cls: 0.1042  val_loss_contrastive: 0.01638  val_loss_rpn_cls: 0.02124  val_loss_rpn_loc: 0.011  time: 0.9040  data_time: 0.1703  lr: 0.0023936  max_mem: 7902M
+[03/20 21:08:12] d2.utils.events INFO:  eta: 1:13:22  iter: 319  total_loss: 0.2972  loss_cls: 0.1234  loss_box_reg: 0.117  loss_contrastive: 0.01664  loss_rpn_cls: 0.03647  loss_rpn_loc: 0.01148  time: 0.9042  data_time: 0.1712  lr: 0.0025534  max_mem: 7902M
+[03/20 21:08:31] d2.utils.events INFO:  eta: 1:13:04  iter: 339  total_loss: 0.3037  loss_cls: 0.1229  loss_box_reg: 0.126  loss_contrastive: 0.0165  loss_rpn_cls: 0.02895  loss_rpn_loc: 0.01105  time: 0.9047  data_time: 0.1823  lr: 0.0027133  max_mem: 7902M
+[03/20 21:08:49] d2.utils.events INFO:  eta: 1:12:47  iter: 359  total_loss: 0.3347  loss_cls: 0.133  loss_box_reg: 0.1351  loss_contrastive: 0.01621  loss_rpn_cls: 0.03326  loss_rpn_loc: 0.01302  time: 0.9045  data_time: 0.1722  lr: 0.0028731  max_mem: 7902M
+[03/20 21:09:07] d2.utils.events INFO:  eta: 1:12:29  iter: 379  total_loss: 0.3262  loss_cls: 0.1291  loss_box_reg: 0.1329  loss_contrastive: 0.01726  loss_rpn_cls: 0.02327  loss_rpn_loc: 0.0116  time: 0.9044  data_time: 0.1777  lr: 0.003033  max_mem: 7902M
+[03/20 21:09:26] d2.utils.events INFO:  eta: 1:12:11  iter: 399  total_loss: 0.3121  loss_cls: 0.1223  loss_box_reg: 0.1313  loss_contrastive: 0.01794  loss_rpn_cls: 0.03186  loss_rpn_loc: 0.01221  total_val_loss: 0.3078  val_loss_box_reg: 0.1317  val_loss_cls: 0.1294  val_loss_contrastive: 0.01746  val_loss_rpn_cls: 0.02142  val_loss_rpn_loc: 0.007858  time: 0.9040  data_time: 0.1709  lr: 0.0031928  max_mem: 7902M
+[03/20 21:09:40] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0000415.pth
+[03/20 21:09:43] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:09:43] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:09:43] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:09:43] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:09:43] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:09:46] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0012 s/iter. Inference: 0.1386 s/iter. Eval: 0.0002 s/iter. Total: 0.1400 s/iter. ETA=0:00:28
+[03/20 21:09:51] d2.evaluation.evaluator INFO: Inference done 47/215. Dataloading: 0.0014 s/iter. Inference: 0.1378 s/iter. Eval: 0.0002 s/iter. Total: 0.1395 s/iter. ETA=0:00:23
+[03/20 21:09:56] d2.evaluation.evaluator INFO: Inference done 83/215. Dataloading: 0.0014 s/iter. Inference: 0.1377 s/iter. Eval: 0.0002 s/iter. Total: 0.1394 s/iter. ETA=0:00:18
+[03/20 21:10:01] d2.evaluation.evaluator INFO: Inference done 119/215. Dataloading: 0.0013 s/iter. Inference: 0.1380 s/iter. Eval: 0.0002 s/iter. Total: 0.1397 s/iter. ETA=0:00:13
+[03/20 21:10:06] d2.evaluation.evaluator INFO: Inference done 155/215. Dataloading: 0.0013 s/iter. Inference: 0.1383 s/iter. Eval: 0.0002 s/iter. Total: 0.1399 s/iter. ETA=0:00:08
+[03/20 21:10:11] d2.evaluation.evaluator INFO: Inference done 191/215. Dataloading: 0.0013 s/iter. Inference: 0.1386 s/iter. Eval: 0.0002 s/iter. Total: 0.1402 s/iter. ETA=0:00:03
+[03/20 21:10:15] d2.evaluation.evaluator INFO: Total inference time: 0:00:29.664300 (0.141259 s / iter per device, on 4 devices)
+[03/20 21:10:15] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.138488 s / iter per device, on 4 devices)
+[03/20 21:10:15] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:10:15] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:10:16] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:10:18] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl  |
+|:-----:|:------:|:------:|:-----:|:-----:|:-----:|
+| 3.783 | 12.371 | 1.107  | 0.000 | 2.571 | 5.532 |
+[03/20 21:10:18] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:10:18] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:10:18] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:10:18] d2.evaluation.testing INFO: copypaste: 3.7827,12.3709,1.1071,0.0000,2.5710,5.5316
+[03/20 21:10:20] d2.utils.events INFO:  eta: 1:11:51  iter: 419  total_loss: 0.3385  loss_cls: 0.1367  loss_box_reg: 0.1367  loss_contrastive: 0.01761  loss_rpn_cls: 0.02811  loss_rpn_loc: 0.01226  time: 0.9041  data_time: 0.1698  lr: 0.0033526  max_mem: 7902M
+[03/20 21:10:39] d2.utils.events INFO:  eta: 1:11:31  iter: 439  total_loss: 0.3103  loss_cls: 0.1316  loss_box_reg: 0.1188  loss_contrastive: 0.01794  loss_rpn_cls: 0.02484  loss_rpn_loc: 0.0108  time: 0.9041  data_time: 0.1832  lr: 0.0035125  max_mem: 7902M
+[03/20 21:10:57] d2.utils.events INFO:  eta: 1:11:13  iter: 459  total_loss: 0.2953  loss_cls: 0.1217  loss_box_reg: 0.1157  loss_contrastive: 0.01831  loss_rpn_cls: 0.02326  loss_rpn_loc: 0.01014  time: 0.9038  data_time: 0.1673  lr: 0.0036723  max_mem: 7902M
+[03/20 21:11:15] d2.utils.events INFO:  eta: 1:10:54  iter: 479  total_loss: 0.3117  loss_cls: 0.1327  loss_box_reg: 0.1288  loss_contrastive: 0.01879  loss_rpn_cls: 0.02482  loss_rpn_loc: 0.01165  time: 0.9037  data_time: 0.1649  lr: 0.0038322  max_mem: 7902M
+[03/20 21:11:33] d2.utils.events INFO:  eta: 1:10:36  iter: 499  total_loss: 0.3095  loss_cls: 0.1257  loss_box_reg: 0.1169  loss_contrastive: 0.01829  loss_rpn_cls: 0.02572  loss_rpn_loc: 0.01077  total_val_loss: 0.2295  val_loss_box_reg: 0.07812  val_loss_cls: 0.09045  val_loss_contrastive: 0.01927  val_loss_rpn_cls: 0.03196  val_loss_rpn_loc: 0.009663  time: 0.9034  data_time: 0.1734  lr: 0.003992  max_mem: 7902M
+[03/20 21:11:51] d2.utils.events INFO:  eta: 1:10:17  iter: 519  total_loss: 0.2963  loss_cls: 0.1227  loss_box_reg: 0.1092  loss_contrastive: 0.01831  loss_rpn_cls: 0.02848  loss_rpn_loc: 0.01192  time: 0.9031  data_time: 0.1676  lr: 0.004  max_mem: 7902M
+[03/20 21:12:10] d2.utils.events INFO:  eta: 1:09:59  iter: 539  total_loss: 0.2789  loss_cls: 0.1211  loss_box_reg: 0.106  loss_contrastive: 0.0179  loss_rpn_cls: 0.02434  loss_rpn_loc: 0.009814  time: 0.9034  data_time: 0.1877  lr: 0.004  max_mem: 7902M
+[03/20 21:12:28] d2.utils.events INFO:  eta: 1:09:42  iter: 559  total_loss: 0.2792  loss_cls: 0.1165  loss_box_reg: 0.1039  loss_contrastive: 0.01757  loss_rpn_cls: 0.02716  loss_rpn_loc: 0.01241  time: 0.9032  data_time: 0.1724  lr: 0.004  max_mem: 7902M
+[03/20 21:12:46] d2.utils.events INFO:  eta: 1:09:22  iter: 579  total_loss: 0.2887  loss_cls: 0.1207  loss_box_reg: 0.1181  loss_contrastive: 0.01762  loss_rpn_cls: 0.02523  loss_rpn_loc: 0.01138  time: 0.9030  data_time: 0.1821  lr: 0.004  max_mem: 7902M
+[03/20 21:13:04] d2.utils.events INFO:  eta: 1:09:03  iter: 599  total_loss: 0.3214  loss_cls: 0.1333  loss_box_reg: 0.1241  loss_contrastive: 0.01773  loss_rpn_cls: 0.02486  loss_rpn_loc: 0.014  total_val_loss: 0.25  val_loss_box_reg: 0.08237  val_loss_cls: 0.1043  val_loss_contrastive: 0.01844  val_loss_rpn_cls: 0.03601  val_loss_rpn_loc: 0.008859  time: 0.9024  data_time: 0.1694  lr: 0.004  max_mem: 7902M
+[03/20 21:13:22] d2.utils.events INFO:  eta: 1:08:44  iter: 619  total_loss: 0.2924  loss_cls: 0.1195  loss_box_reg: 0.1087  loss_contrastive: 0.01769  loss_rpn_cls: 0.02579  loss_rpn_loc: 0.01031  time: 0.9021  data_time: 0.1669  lr: 0.004  max_mem: 7902M
+[03/20 21:13:27] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0000623.pth
+[03/20 21:13:30] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:13:30] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:13:30] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:13:30] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:13:30] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:13:33] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0012 s/iter. Inference: 0.1387 s/iter. Eval: 0.0002 s/iter. Total: 0.1401 s/iter. ETA=0:00:28
+[03/20 21:13:38] d2.evaluation.evaluator INFO: Inference done 47/215. Dataloading: 0.0013 s/iter. Inference: 0.1380 s/iter. Eval: 0.0002 s/iter. Total: 0.1396 s/iter. ETA=0:00:23
+[03/20 21:13:43] d2.evaluation.evaluator INFO: Inference done 84/215. Dataloading: 0.0013 s/iter. Inference: 0.1375 s/iter. Eval: 0.0002 s/iter. Total: 0.1390 s/iter. ETA=0:00:18
+[03/20 21:13:48] d2.evaluation.evaluator INFO: Inference done 120/215. Dataloading: 0.0013 s/iter. Inference: 0.1381 s/iter. Eval: 0.0002 s/iter. Total: 0.1397 s/iter. ETA=0:00:13
+[03/20 21:13:53] d2.evaluation.evaluator INFO: Inference done 156/215. Dataloading: 0.0013 s/iter. Inference: 0.1382 s/iter. Eval: 0.0002 s/iter. Total: 0.1398 s/iter. ETA=0:00:08
+[03/20 21:13:58] d2.evaluation.evaluator INFO: Inference done 192/215. Dataloading: 0.0013 s/iter. Inference: 0.1382 s/iter. Eval: 0.0002 s/iter. Total: 0.1398 s/iter. ETA=0:00:03
+[03/20 21:14:02] d2.evaluation.evaluator INFO: Total inference time: 0:00:29.596789 (0.140937 s / iter per device, on 4 devices)
+[03/20 21:14:02] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.138228 s / iter per device, on 4 devices)
+[03/20 21:14:02] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:14:02] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:14:02] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:14:04] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl  |
+|:-----:|:------:|:------:|:-----:|:-----:|:-----:|
+| 5.454 | 17.528 | 2.035  | 0.000 | 3.509 | 7.775 |
+[03/20 21:14:04] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:14:04] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:14:04] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:14:04] d2.evaluation.testing INFO: copypaste: 5.4536,17.5276,2.0352,0.0000,3.5091,7.7749
+[03/20 21:14:15] d2.utils.events INFO:  eta: 1:08:26  iter: 639  total_loss: 0.3093  loss_cls: 0.128  loss_box_reg: 0.1187  loss_contrastive: 0.01734  loss_rpn_cls: 0.03194  loss_rpn_loc: 0.01154  time: 0.9024  data_time: 0.1841  lr: 0.004  max_mem: 7902M
+[03/20 21:14:33] d2.utils.events INFO:  eta: 1:08:08  iter: 659  total_loss: 0.2847  loss_cls: 0.1263  loss_box_reg: 0.1136  loss_contrastive: 0.01704  loss_rpn_cls: 0.02412  loss_rpn_loc: 0.009867  time: 0.9022  data_time: 0.1783  lr: 0.004  max_mem: 7902M
+[03/20 21:14:51] d2.utils.events INFO:  eta: 1:07:49  iter: 679  total_loss: 0.2982  loss_cls: 0.1264  loss_box_reg: 0.114  loss_contrastive: 0.0172  loss_rpn_cls: 0.01955  loss_rpn_loc: 0.01061  time: 0.9019  data_time: 0.1707  lr: 0.004  max_mem: 7902M
+[03/20 21:15:10] d2.utils.events INFO:  eta: 1:07:30  iter: 699  total_loss: 0.28  loss_cls: 0.1165  loss_box_reg: 0.1075  loss_contrastive: 0.01799  loss_rpn_cls: 0.01997  loss_rpn_loc: 0.01133  total_val_loss: 0.2234  val_loss_box_reg: 0.08422  val_loss_cls: 0.09508  val_loss_contrastive: 0.01742  val_loss_rpn_cls: 0.01886  val_loss_rpn_loc: 0.007813  time: 0.9017  data_time: 0.1788  lr: 0.004  max_mem: 7902M
+[03/20 21:15:28] d2.utils.events INFO:  eta: 1:07:14  iter: 719  total_loss: 0.3043  loss_cls: 0.1293  loss_box_reg: 0.1168  loss_contrastive: 0.01684  loss_rpn_cls: 0.02245  loss_rpn_loc: 0.01059  time: 0.9021  data_time: 0.1813  lr: 0.004  max_mem: 7902M
+[03/20 21:15:47] d2.utils.events INFO:  eta: 1:06:55  iter: 739  total_loss: 0.2996  loss_cls: 0.1236  loss_box_reg: 0.121  loss_contrastive: 0.01706  loss_rpn_cls: 0.02257  loss_rpn_loc: 0.01228  time: 0.9022  data_time: 0.1922  lr: 0.004  max_mem: 7902M
+[03/20 21:16:05] d2.utils.events INFO:  eta: 1:06:37  iter: 759  total_loss: 0.306  loss_cls: 0.1243  loss_box_reg: 0.115  loss_contrastive: 0.01665  loss_rpn_cls: 0.0291  loss_rpn_loc: 0.01449  time: 0.9021  data_time: 0.1752  lr: 0.004  max_mem: 7902M
+[03/20 21:16:23] d2.utils.events INFO:  eta: 1:06:18  iter: 779  total_loss: 0.2973  loss_cls: 0.1237  loss_box_reg: 0.1153  loss_contrastive: 0.01632  loss_rpn_cls: 0.02823  loss_rpn_loc: 0.01111  time: 0.9017  data_time: 0.1691  lr: 0.004  max_mem: 7902M
+[03/20 21:16:41] d2.utils.events INFO:  eta: 1:06:00  iter: 799  total_loss: 0.2834  loss_cls: 0.1249  loss_box_reg: 0.1079  loss_contrastive: 0.01676  loss_rpn_cls: 0.0224  loss_rpn_loc: 0.009461  total_val_loss: 0.2803  val_loss_box_reg: 0.1031  val_loss_cls: 0.1061  val_loss_contrastive: 0.01641  val_loss_rpn_cls: 0.038  val_loss_rpn_loc: 0.01671  time: 0.9017  data_time: 0.1758  lr: 0.004  max_mem: 7902M
+[03/20 21:16:59] d2.utils.events INFO:  eta: 1:05:42  iter: 819  total_loss: 0.2919  loss_cls: 0.124  loss_box_reg: 0.1166  loss_contrastive: 0.0169  loss_rpn_cls: 0.0224  loss_rpn_loc: 0.01047  time: 0.9018  data_time: 0.1704  lr: 0.004  max_mem: 7902M
+[03/20 21:17:11] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0000831.pth
+[03/20 21:17:16] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:17:16] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:17:16] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:17:16] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:17:16] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:17:19] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0012 s/iter. Inference: 0.1385 s/iter. Eval: 0.0002 s/iter. Total: 0.1399 s/iter. ETA=0:00:28
+[03/20 21:17:24] d2.evaluation.evaluator INFO: Inference done 48/215. Dataloading: 0.0014 s/iter. Inference: 0.1369 s/iter. Eval: 0.0002 s/iter. Total: 0.1385 s/iter. ETA=0:00:23
+[03/20 21:17:29] d2.evaluation.evaluator INFO: Inference done 84/215. Dataloading: 0.0014 s/iter. Inference: 0.1376 s/iter. Eval: 0.0002 s/iter. Total: 0.1393 s/iter. ETA=0:00:18
+[03/20 21:17:34] d2.evaluation.evaluator INFO: Inference done 120/215. Dataloading: 0.0014 s/iter. Inference: 0.1380 s/iter. Eval: 0.0002 s/iter. Total: 0.1397 s/iter. ETA=0:00:13
+[03/20 21:17:39] d2.evaluation.evaluator INFO: Inference done 156/215. Dataloading: 0.0014 s/iter. Inference: 0.1380 s/iter. Eval: 0.0002 s/iter. Total: 0.1396 s/iter. ETA=0:00:08
+[03/20 21:17:44] d2.evaluation.evaluator INFO: Inference done 192/215. Dataloading: 0.0014 s/iter. Inference: 0.1382 s/iter. Eval: 0.0002 s/iter. Total: 0.1398 s/iter. ETA=0:00:03
+[03/20 21:17:47] d2.evaluation.evaluator INFO: Total inference time: 0:00:29.623879 (0.141066 s / iter per device, on 4 devices)
+[03/20 21:17:47] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.138200 s / iter per device, on 4 devices)
+[03/20 21:17:48] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:17:48] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:17:48] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:17:49] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl  |
+|:-----:|:------:|:------:|:-----:|:-----:|:-----:|
+| 6.635 | 21.687 | 2.712  | 0.000 | 3.905 | 9.660 |
+[03/20 21:17:49] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:17:49] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:17:49] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:17:49] d2.evaluation.testing INFO: copypaste: 6.6351,21.6870,2.7120,0.0000,3.9054,9.6601
+[03/20 21:17:53] d2.utils.events INFO:  eta: 1:05:24  iter: 839  total_loss: 0.2758  loss_cls: 0.1156  loss_box_reg: 0.1056  loss_contrastive: 0.01681  loss_rpn_cls: 0.01947  loss_rpn_loc: 0.00845  time: 0.9020  data_time: 0.1932  lr: 0.004  max_mem: 7902M
+[03/20 21:18:11] d2.utils.events INFO:  eta: 1:05:07  iter: 859  total_loss: 0.2901  loss_cls: 0.1255  loss_box_reg: 0.1089  loss_contrastive: 0.01641  loss_rpn_cls: 0.01957  loss_rpn_loc: 0.009783  time: 0.9018  data_time: 0.1732  lr: 0.004  max_mem: 7902M
+[03/20 21:18:29] d2.utils.events INFO:  eta: 1:04:49  iter: 879  total_loss: 0.3138  loss_cls: 0.1391  loss_box_reg: 0.123  loss_contrastive: 0.01597  loss_rpn_cls: 0.0217  loss_rpn_loc: 0.009726  time: 0.9018  data_time: 0.1732  lr: 0.004  max_mem: 7902M
+[03/20 21:18:47] d2.utils.events INFO:  eta: 1:04:31  iter: 899  total_loss: 0.2914  loss_cls: 0.1239  loss_box_reg: 0.1149  loss_contrastive: 0.01635  loss_rpn_cls: 0.02275  loss_rpn_loc: 0.01142  total_val_loss: 0.3137  val_loss_box_reg: 0.1133  val_loss_cls: 0.1338  val_loss_contrastive: 0.0175  val_loss_rpn_cls: 0.03537  val_loss_rpn_loc: 0.01375  time: 0.9017  data_time: 0.1769  lr: 0.004  max_mem: 7902M
+[03/20 21:19:06] d2.utils.events INFO:  eta: 1:04:14  iter: 919  total_loss: 0.2943  loss_cls: 0.12  loss_box_reg: 0.1178  loss_contrastive: 0.0165  loss_rpn_cls: 0.02323  loss_rpn_loc: 0.01036  time: 0.9022  data_time: 0.1821  lr: 0.004  max_mem: 7902M
+[03/20 21:19:24] d2.utils.events INFO:  eta: 1:03:56  iter: 939  total_loss: 0.288  loss_cls: 0.1215  loss_box_reg: 0.112  loss_contrastive: 0.01633  loss_rpn_cls: 0.02444  loss_rpn_loc: 0.01141  time: 0.9024  data_time: 0.1894  lr: 0.004  max_mem: 7902M
+[03/20 21:19:42] d2.utils.events INFO:  eta: 1:03:39  iter: 959  total_loss: 0.2858  loss_cls: 0.1226  loss_box_reg: 0.1068  loss_contrastive: 0.01617  loss_rpn_cls: 0.02417  loss_rpn_loc: 0.01125  time: 0.9022  data_time: 0.1728  lr: 0.004  max_mem: 7902M
+[03/20 21:20:00] d2.utils.events INFO:  eta: 1:03:20  iter: 979  total_loss: 0.2758  loss_cls: 0.1285  loss_box_reg: 0.115  loss_contrastive: 0.01625  loss_rpn_cls: 0.02143  loss_rpn_loc: 0.01023  time: 0.9020  data_time: 0.1707  lr: 0.004  max_mem: 7902M
+[03/20 21:20:19] d2.utils.events INFO:  eta: 1:03:02  iter: 999  total_loss: 0.2952  loss_cls: 0.1272  loss_box_reg: 0.1247  loss_contrastive: 0.01607  loss_rpn_cls: 0.02031  loss_rpn_loc: 0.01068  total_val_loss: 0.2694  val_loss_box_reg: 0.1151  val_loss_cls: 0.1171  val_loss_contrastive: 0.01588  val_loss_rpn_cls: 0.01429  val_loss_rpn_loc: 0.006927  time: 0.9020  data_time: 0.1696  lr: 0.004  max_mem: 7902M
+[03/20 21:20:37] d2.utils.events INFO:  eta: 1:02:43  iter: 1019  total_loss: 0.3141  loss_cls: 0.1369  loss_box_reg: 0.1127  loss_contrastive: 0.01577  loss_rpn_cls: 0.02484  loss_rpn_loc: 0.01315  time: 0.9017  data_time: 0.1652  lr: 0.004  max_mem: 7902M
+[03/20 21:20:55] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0001039.pth
+[03/20 21:20:56] d2.utils.events INFO:  eta: 1:02:25  iter: 1039  total_loss: 0.2896  loss_cls: 0.1236  loss_box_reg: 0.1197  loss_contrastive: 0.01588  loss_rpn_cls: 0.02273  loss_rpn_loc: 0.01052  time: 0.9018  data_time: 0.1821  lr: 0.004  max_mem: 7902M
+[03/20 21:21:01] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:21:01] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:21:01] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:21:01] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:21:01] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:21:04] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0011 s/iter. Inference: 0.1363 s/iter. Eval: 0.0002 s/iter. Total: 0.1376 s/iter. ETA=0:00:28
+[03/20 21:21:09] d2.evaluation.evaluator INFO: Inference done 47/215. Dataloading: 0.0013 s/iter. Inference: 0.1374 s/iter. Eval: 0.0002 s/iter. Total: 0.1389 s/iter. ETA=0:00:23
+[03/20 21:21:14] d2.evaluation.evaluator INFO: Inference done 83/215. Dataloading: 0.0013 s/iter. Inference: 0.1378 s/iter. Eval: 0.0002 s/iter. Total: 0.1393 s/iter. ETA=0:00:18
+[03/20 21:21:19] d2.evaluation.evaluator INFO: Inference done 119/215. Dataloading: 0.0013 s/iter. Inference: 0.1381 s/iter. Eval: 0.0002 s/iter. Total: 0.1397 s/iter. ETA=0:00:13
+[03/20 21:21:24] d2.evaluation.evaluator INFO: Inference done 155/215. Dataloading: 0.0013 s/iter. Inference: 0.1383 s/iter. Eval: 0.0002 s/iter. Total: 0.1399 s/iter. ETA=0:00:08
+[03/20 21:21:29] d2.evaluation.evaluator INFO: Inference done 191/215. Dataloading: 0.0013 s/iter. Inference: 0.1384 s/iter. Eval: 0.0002 s/iter. Total: 0.1399 s/iter. ETA=0:00:03
+[03/20 21:21:32] d2.evaluation.evaluator INFO: Total inference time: 0:00:29.649833 (0.141190 s / iter per device, on 4 devices)
+[03/20 21:21:32] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.138395 s / iter per device, on 4 devices)
+[03/20 21:21:33] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:21:33] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:21:33] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:21:34] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl  |
+|:-----:|:------:|:------:|:-----:|:-----:|:-----:|
+| 6.406 | 20.204 | 2.187  | 0.000 | 4.240 | 9.393 |
+[03/20 21:21:34] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:21:34] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:21:34] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:21:34] d2.evaluation.testing INFO: copypaste: 6.4060,20.2036,2.1865,0.0000,4.2402,9.3925
+[03/20 21:21:48] d2.utils.events INFO:  eta: 1:02:08  iter: 1059  total_loss: 0.2788  loss_cls: 0.1175  loss_box_reg: 0.1188  loss_contrastive: 0.01612  loss_rpn_cls: 0.01693  loss_rpn_loc: 0.01059  time: 0.9018  data_time: 0.1713  lr: 0.004  max_mem: 7902M
+[03/20 21:22:06] d2.utils.events INFO:  eta: 1:01:50  iter: 1079  total_loss: 0.2841  loss_cls: 0.1188  loss_box_reg: 0.1137  loss_contrastive: 0.01583  loss_rpn_cls: 0.02073  loss_rpn_loc: 0.01018  time: 0.9017  data_time: 0.1763  lr: 0.004  max_mem: 7902M
+[03/20 21:22:24] d2.utils.events INFO:  eta: 1:01:32  iter: 1099  total_loss: 0.2811  loss_cls: 0.1217  loss_box_reg: 0.1141  loss_contrastive: 0.0157  loss_rpn_cls: 0.01857  loss_rpn_loc: 0.01023  total_val_loss: 0.214  val_loss_box_reg: 0.07204  val_loss_cls: 0.08506  val_loss_contrastive: 0.01532  val_loss_rpn_cls: 0.03039  val_loss_rpn_loc: 0.0112  time: 0.9016  data_time: 0.1693  lr: 0.004  max_mem: 7902M
+[03/20 21:22:42] d2.utils.events INFO:  eta: 1:01:13  iter: 1119  total_loss: 0.2831  loss_cls: 0.122  loss_box_reg: 0.1218  loss_contrastive: 0.01553  loss_rpn_cls: 0.02086  loss_rpn_loc: 0.0119  time: 0.9016  data_time: 0.1697  lr: 0.004  max_mem: 7902M
+[03/20 21:23:01] d2.utils.events INFO:  eta: 1:00:55  iter: 1139  total_loss: 0.2842  loss_cls: 0.118  loss_box_reg: 0.1111  loss_contrastive: 0.01529  loss_rpn_cls: 0.02308  loss_rpn_loc: 0.01126  time: 0.9017  data_time: 0.1854  lr: 0.004  max_mem: 7902M
+[03/20 21:23:19] d2.utils.events INFO:  eta: 1:00:37  iter: 1159  total_loss: 0.3072  loss_cls: 0.1356  loss_box_reg: 0.1323  loss_contrastive: 0.01591  loss_rpn_cls: 0.02077  loss_rpn_loc: 0.009357  time: 0.9015  data_time: 0.1732  lr: 0.004  max_mem: 7902M
+[03/20 21:23:37] d2.utils.events INFO:  eta: 1:00:17  iter: 1179  total_loss: 0.2971  loss_cls: 0.1307  loss_box_reg: 0.1198  loss_contrastive: 0.0156  loss_rpn_cls: 0.02172  loss_rpn_loc: 0.01066  time: 0.9012  data_time: 0.1677  lr: 0.004  max_mem: 7902M
+[03/20 21:23:55] d2.utils.events INFO:  eta: 0:59:58  iter: 1199  total_loss: 0.2727  loss_cls: 0.1194  loss_box_reg: 0.1137  loss_contrastive: 0.0152  loss_rpn_cls: 0.01944  loss_rpn_loc: 0.009876  total_val_loss: 0.3215  val_loss_box_reg: 0.1247  val_loss_cls: 0.1352  val_loss_contrastive: 0.01529  val_loss_rpn_cls: 0.03339  val_loss_rpn_loc: 0.01298  time: 0.9012  data_time: 0.1715  lr: 0.004  max_mem: 7902M
+[03/20 21:24:14] d2.utils.events INFO:  eta: 0:59:42  iter: 1219  total_loss: 0.3087  loss_cls: 0.1279  loss_box_reg: 0.1226  loss_contrastive: 0.01527  loss_rpn_cls: 0.02461  loss_rpn_loc: 0.01087  time: 0.9016  data_time: 0.1787  lr: 0.004  max_mem: 7902M
+[03/20 21:24:33] d2.utils.events INFO:  eta: 0:59:25  iter: 1239  total_loss: 0.3036  loss_cls: 0.1348  loss_box_reg: 0.1198  loss_contrastive: 0.01557  loss_rpn_cls: 0.01833  loss_rpn_loc: 0.009715  time: 0.9022  data_time: 0.1988  lr: 0.004  max_mem: 7902M
+[03/20 21:24:41] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0001247.pth
+[03/20 21:24:47] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:24:47] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:24:47] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:24:47] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:24:47] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:24:50] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0013 s/iter. Inference: 0.1443 s/iter. Eval: 0.0002 s/iter. Total: 0.1459 s/iter. ETA=0:00:29
+[03/20 21:24:56] d2.evaluation.evaluator INFO: Inference done 47/215. Dataloading: 0.0014 s/iter. Inference: 0.1408 s/iter. Eval: 0.0002 s/iter. Total: 0.1425 s/iter. ETA=0:00:23
+[03/20 21:25:01] d2.evaluation.evaluator INFO: Inference done 83/215. Dataloading: 0.0014 s/iter. Inference: 0.1404 s/iter. Eval: 0.0002 s/iter. Total: 0.1420 s/iter. ETA=0:00:18
+[03/20 21:25:06] d2.evaluation.evaluator INFO: Inference done 119/215. Dataloading: 0.0013 s/iter. Inference: 0.1398 s/iter. Eval: 0.0002 s/iter. Total: 0.1415 s/iter. ETA=0:00:13
+[03/20 21:25:11] d2.evaluation.evaluator INFO: Inference done 155/215. Dataloading: 0.0014 s/iter. Inference: 0.1401 s/iter. Eval: 0.0002 s/iter. Total: 0.1418 s/iter. ETA=0:00:08
+[03/20 21:25:16] d2.evaluation.evaluator INFO: Inference done 191/215. Dataloading: 0.0014 s/iter. Inference: 0.1401 s/iter. Eval: 0.0002 s/iter. Total: 0.1417 s/iter. ETA=0:00:03
+[03/20 21:25:20] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.005189 (0.142882 s / iter per device, on 4 devices)
+[03/20 21:25:20] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.140106 s / iter per device, on 4 devices)
+[03/20 21:25:20] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:25:20] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:25:20] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:25:21] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl  |
+|:-----:|:------:|:------:|:-----:|:-----:|:-----:|
+| 6.234 | 21.002 | 1.645  | 0.000 | 3.931 | 9.366 |
+[03/20 21:25:21] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:25:21] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:25:21] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:25:21] d2.evaluation.testing INFO: copypaste: 6.2337,21.0016,1.6447,0.0000,3.9314,9.3662
+[03/20 21:25:27] d2.utils.events INFO:  eta: 0:59:08  iter: 1259  total_loss: 0.2754  loss_cls: 0.1177  loss_box_reg: 0.1092  loss_contrastive: 0.01578  loss_rpn_cls: 0.01916  loss_rpn_loc: 0.0108  time: 0.9025  data_time: 0.1792  lr: 0.004  max_mem: 7902M
+[03/20 21:25:45] d2.utils.events INFO:  eta: 0:58:51  iter: 1279  total_loss: 0.258  loss_cls: 0.1127  loss_box_reg: 0.1055  loss_contrastive: 0.01527  loss_rpn_cls: 0.01834  loss_rpn_loc: 0.009033  time: 0.9027  data_time: 0.1850  lr: 0.004  max_mem: 7902M
+[03/20 21:26:04] d2.utils.events INFO:  eta: 0:58:34  iter: 1299  total_loss: 0.3153  loss_cls: 0.1346  loss_box_reg: 0.1283  loss_contrastive: 0.01549  loss_rpn_cls: 0.01791  loss_rpn_loc: 0.01178  total_val_loss: 0.2209  val_loss_box_reg: 0.07073  val_loss_cls: 0.09853  val_loss_contrastive: 0.01507  val_loss_rpn_cls: 0.02595  val_loss_rpn_loc: 0.01066  time: 0.9031  data_time: 0.1811  lr: 0.004  max_mem: 7902M
+[03/20 21:26:23] d2.utils.events INFO:  eta: 0:58:18  iter: 1319  total_loss: 0.2881  loss_cls: 0.1275  loss_box_reg: 0.1152  loss_contrastive: 0.01572  loss_rpn_cls: 0.01739  loss_rpn_loc: 0.008966  time: 0.9035  data_time: 0.1807  lr: 0.004  max_mem: 7902M
+[03/20 21:26:42] d2.utils.events INFO:  eta: 0:58:02  iter: 1339  total_loss: 0.3052  loss_cls: 0.1279  loss_box_reg: 0.1252  loss_contrastive: 0.01489  loss_rpn_cls: 0.02327  loss_rpn_loc: 0.01156  time: 0.9039  data_time: 0.1981  lr: 0.004  max_mem: 7902M
+[03/20 21:27:00] d2.utils.events INFO:  eta: 0:57:44  iter: 1359  total_loss: 0.2849  loss_cls: 0.1264  loss_box_reg: 0.1129  loss_contrastive: 0.01507  loss_rpn_cls: 0.01939  loss_rpn_loc: 0.01082  time: 0.9041  data_time: 0.1789  lr: 0.004  max_mem: 7902M
+[03/20 21:27:19] d2.utils.events INFO:  eta: 0:57:27  iter: 1379  total_loss: 0.2699  loss_cls: 0.1166  loss_box_reg: 0.1109  loss_contrastive: 0.01509  loss_rpn_cls: 0.02148  loss_rpn_loc: 0.01076  time: 0.9043  data_time: 0.1829  lr: 0.004  max_mem: 7902M
+[03/20 21:27:38] d2.utils.events INFO:  eta: 0:57:11  iter: 1399  total_loss: 0.2843  loss_cls: 0.1145  loss_box_reg: 0.1167  loss_contrastive: 0.01498  loss_rpn_cls: 0.02047  loss_rpn_loc: 0.01103  total_val_loss: 0.2296  val_loss_box_reg: 0.08759  val_loss_cls: 0.1051  val_loss_contrastive: 0.01526  val_loss_rpn_cls: 0.01693  val_loss_rpn_loc: 0.00478  time: 0.9045  data_time: 0.1874  lr: 0.004  max_mem: 7902M
+[03/20 21:27:57] d2.utils.events INFO:  eta: 0:56:55  iter: 1419  total_loss: 0.3286  loss_cls: 0.138  loss_box_reg: 0.13  loss_contrastive: 0.01522  loss_rpn_cls: 0.02043  loss_rpn_loc: 0.01076  time: 0.9049  data_time: 0.1837  lr: 0.004  max_mem: 7902M
+[03/20 21:28:16] d2.utils.events INFO:  eta: 0:56:40  iter: 1439  total_loss: 0.2841  loss_cls: 0.1229  loss_box_reg: 0.1108  loss_contrastive: 0.01502  loss_rpn_cls: 0.02421  loss_rpn_loc: 0.0105  time: 0.9054  data_time: 0.2018  lr: 0.004  max_mem: 7902M
+[03/20 21:28:31] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0001455.pth
+[03/20 21:28:35] d2.utils.events INFO:  eta: 0:56:24  iter: 1459  total_loss: 0.3104  loss_cls: 0.1315  loss_box_reg: 0.1287  loss_contrastive: 0.01488  loss_rpn_cls: 0.01879  loss_rpn_loc: 0.01046  time: 0.9056  data_time: 0.1918  lr: 0.004  max_mem: 7902M
+[03/20 21:28:38] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:28:38] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:28:38] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:28:38] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:28:38] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:28:42] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0012 s/iter. Inference: 0.1401 s/iter. Eval: 0.0002 s/iter. Total: 0.1414 s/iter. ETA=0:00:28
+[03/20 21:28:47] d2.evaluation.evaluator INFO: Inference done 47/215. Dataloading: 0.0014 s/iter. Inference: 0.1402 s/iter. Eval: 0.0002 s/iter. Total: 0.1419 s/iter. ETA=0:00:23
+[03/20 21:28:52] d2.evaluation.evaluator INFO: Inference done 82/215. Dataloading: 0.0014 s/iter. Inference: 0.1411 s/iter. Eval: 0.0002 s/iter. Total: 0.1428 s/iter. ETA=0:00:18
+[03/20 21:28:57] d2.evaluation.evaluator INFO: Inference done 117/215. Dataloading: 0.0014 s/iter. Inference: 0.1413 s/iter. Eval: 0.0002 s/iter. Total: 0.1431 s/iter. ETA=0:00:14
+[03/20 21:29:02] d2.evaluation.evaluator INFO: Inference done 152/215. Dataloading: 0.0014 s/iter. Inference: 0.1414 s/iter. Eval: 0.0002 s/iter. Total: 0.1431 s/iter. ETA=0:00:09
+[03/20 21:29:07] d2.evaluation.evaluator INFO: Inference done 188/215. Dataloading: 0.0014 s/iter. Inference: 0.1412 s/iter. Eval: 0.0002 s/iter. Total: 0.1430 s/iter. ETA=0:00:03
+[03/20 21:29:11] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.330228 (0.144430 s / iter per device, on 4 devices)
+[03/20 21:29:11] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.141198 s / iter per device, on 4 devices)
+[03/20 21:29:11] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:29:11] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:29:11] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:29:13] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.167 | 23.018 | 2.148  | 0.000 | 3.877 | 11.049 |
+[03/20 21:29:13] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:29:13] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:29:13] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:29:13] d2.evaluation.testing INFO: copypaste: 7.1672,23.0184,2.1477,0.0000,3.8773,11.0492
+[03/20 21:29:28] d2.utils.events INFO:  eta: 0:56:08  iter: 1479  total_loss: 0.293  loss_cls: 0.1241  loss_box_reg: 0.1293  loss_contrastive: 0.01526  loss_rpn_cls: 0.0186  loss_rpn_loc: 0.009793  time: 0.9058  data_time: 0.1813  lr: 0.004  max_mem: 7902M
+[03/20 21:29:47] d2.utils.events INFO:  eta: 0:55:52  iter: 1499  total_loss: 0.2878  loss_cls: 0.1258  loss_box_reg: 0.1207  loss_contrastive: 0.01513  loss_rpn_cls: 0.01826  loss_rpn_loc: 0.01035  total_val_loss: 0.2537  val_loss_box_reg: 0.09339  val_loss_cls: 0.1011  val_loss_contrastive: 0.01485  val_loss_rpn_cls: 0.03541  val_loss_rpn_loc: 0.008953  time: 0.9059  data_time: 0.1793  lr: 0.004  max_mem: 7902M
+[03/20 21:30:06] d2.utils.events INFO:  eta: 0:55:39  iter: 1519  total_loss: 0.2934  loss_cls: 0.1254  loss_box_reg: 0.122  loss_contrastive: 0.01502  loss_rpn_cls: 0.02178  loss_rpn_loc: 0.01314  time: 0.9063  data_time: 0.1842  lr: 0.004  max_mem: 7902M
+[03/20 21:30:26] d2.utils.events INFO:  eta: 0:55:22  iter: 1539  total_loss: 0.2768  loss_cls: 0.1192  loss_box_reg: 0.1098  loss_contrastive: 0.015  loss_rpn_cls: 0.0202  loss_rpn_loc: 0.009498  time: 0.9068  data_time: 0.2132  lr: 0.004  max_mem: 7902M
+[03/20 21:30:44] d2.utils.events INFO:  eta: 0:55:07  iter: 1559  total_loss: 0.2915  loss_cls: 0.1223  loss_box_reg: 0.1202  loss_contrastive: 0.01531  loss_rpn_cls: 0.02207  loss_rpn_loc: 0.01115  time: 0.9069  data_time: 0.1781  lr: 0.004  max_mem: 7902M
+[03/20 21:31:02] d2.utils.events INFO:  eta: 0:54:51  iter: 1579  total_loss: 0.2782  loss_cls: 0.1188  loss_box_reg: 0.1151  loss_contrastive: 0.01515  loss_rpn_cls: 0.01843  loss_rpn_loc: 0.01022  time: 0.9070  data_time: 0.1819  lr: 0.004  max_mem: 7902M
+[03/20 21:31:21] d2.utils.events INFO:  eta: 0:54:37  iter: 1599  total_loss: 0.2862  loss_cls: 0.1236  loss_box_reg: 0.1184  loss_contrastive: 0.01546  loss_rpn_cls: 0.01602  loss_rpn_loc: 0.008908  total_val_loss: 0.2613  val_loss_box_reg: 0.115  val_loss_cls: 0.105  val_loss_contrastive: 0.01565  val_loss_rpn_cls: 0.01914  val_loss_rpn_loc: 0.006511  time: 0.9072  data_time: 0.1824  lr: 0.004  max_mem: 7902M
+[03/20 21:31:40] d2.utils.events INFO:  eta: 0:54:22  iter: 1619  total_loss: 0.2978  loss_cls: 0.1243  loss_box_reg: 0.1243  loss_contrastive: 0.01527  loss_rpn_cls: 0.02049  loss_rpn_loc: 0.0111  time: 0.9074  data_time: 0.1809  lr: 0.004  max_mem: 7902M
+[03/20 21:31:59] d2.utils.events INFO:  eta: 0:54:06  iter: 1639  total_loss: 0.2996  loss_cls: 0.132  loss_box_reg: 0.1251  loss_contrastive: 0.01514  loss_rpn_cls: 0.01703  loss_rpn_loc: 0.01019  time: 0.9078  data_time: 0.2008  lr: 0.004  max_mem: 7902M
+[03/20 21:32:18] d2.utils.events INFO:  eta: 0:53:53  iter: 1659  total_loss: 0.2779  loss_cls: 0.1119  loss_box_reg: 0.1184  loss_contrastive: 0.01465  loss_rpn_cls: 0.01784  loss_rpn_loc: 0.01036  time: 0.9080  data_time: 0.1845  lr: 0.004  max_mem: 7902M
+[03/20 21:32:22] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0001663.pth
+[03/20 21:32:30] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:32:30] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:32:30] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:32:30] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:32:30] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:32:33] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0014 s/iter. Inference: 0.1453 s/iter. Eval: 0.0003 s/iter. Total: 0.1469 s/iter. ETA=0:00:29
+[03/20 21:32:38] d2.evaluation.evaluator INFO: Inference done 46/215. Dataloading: 0.0014 s/iter. Inference: 0.1419 s/iter. Eval: 0.0002 s/iter. Total: 0.1436 s/iter. ETA=0:00:24
+[03/20 21:32:43] d2.evaluation.evaluator INFO: Inference done 82/215. Dataloading: 0.0014 s/iter. Inference: 0.1410 s/iter. Eval: 0.0002 s/iter. Total: 0.1427 s/iter. ETA=0:00:18
+[03/20 21:32:48] d2.evaluation.evaluator INFO: Inference done 118/215. Dataloading: 0.0014 s/iter. Inference: 0.1407 s/iter. Eval: 0.0002 s/iter. Total: 0.1424 s/iter. ETA=0:00:13
+[03/20 21:32:53] d2.evaluation.evaluator INFO: Inference done 153/215. Dataloading: 0.0014 s/iter. Inference: 0.1411 s/iter. Eval: 0.0002 s/iter. Total: 0.1429 s/iter. ETA=0:00:08
+[03/20 21:32:58] d2.evaluation.evaluator INFO: Inference done 188/215. Dataloading: 0.0014 s/iter. Inference: 0.1414 s/iter. Eval: 0.0002 s/iter. Total: 0.1431 s/iter. ETA=0:00:03
+[03/20 21:33:03] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.297566 (0.144274 s / iter per device, on 4 devices)
+[03/20 21:33:03] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.141148 s / iter per device, on 4 devices)
+[03/20 21:33:03] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:33:03] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:33:03] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:33:04] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.294 | 23.741 | 2.219  | 0.000 | 4.184 | 10.693 |
+[03/20 21:33:04] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:33:04] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:33:04] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:33:04] d2.evaluation.testing INFO: copypaste: 7.2940,23.7411,2.2194,0.0000,4.1840,10.6932
+[03/20 21:33:12] d2.utils.events INFO:  eta: 0:53:37  iter: 1679  total_loss: 0.2698  loss_cls: 0.1179  loss_box_reg: 0.1125  loss_contrastive: 0.01486  loss_rpn_cls: 0.02358  loss_rpn_loc: 0.009654  time: 0.9082  data_time: 0.1870  lr: 0.004  max_mem: 7902M
+[03/20 21:33:31] d2.utils.events INFO:  eta: 0:53:24  iter: 1699  total_loss: 0.282  loss_cls: 0.1217  loss_box_reg: 0.1172  loss_contrastive: 0.01499  loss_rpn_cls: 0.01859  loss_rpn_loc: 0.009587  total_val_loss: 0.2134  val_loss_box_reg: 0.08263  val_loss_cls: 0.09277  val_loss_contrastive: 0.01459  val_loss_rpn_cls: 0.0168  val_loss_rpn_loc: 0.006567  time: 0.9085  data_time: 0.1860  lr: 0.004  max_mem: 7902M
+[03/20 21:33:50] d2.utils.events INFO:  eta: 0:53:06  iter: 1719  total_loss: 0.2797  loss_cls: 0.1188  loss_box_reg: 0.1181  loss_contrastive: 0.01504  loss_rpn_cls: 0.01687  loss_rpn_loc: 0.01055  time: 0.9087  data_time: 0.1840  lr: 0.004  max_mem: 7902M
+[03/20 21:34:09] d2.utils.events INFO:  eta: 0:52:51  iter: 1739  total_loss: 0.2885  loss_cls: 0.1181  loss_box_reg: 0.1183  loss_contrastive: 0.01493  loss_rpn_cls: 0.02378  loss_rpn_loc: 0.0117  time: 0.9091  data_time: 0.1928  lr: 0.004  max_mem: 7902M
+[03/20 21:34:28] d2.utils.events INFO:  eta: 0:52:34  iter: 1759  total_loss: 0.2578  loss_cls: 0.1057  loss_box_reg: 0.1008  loss_contrastive: 0.01516  loss_rpn_cls: 0.01722  loss_rpn_loc: 0.009876  time: 0.9093  data_time: 0.1812  lr: 0.004  max_mem: 7902M
+[03/20 21:34:46] d2.utils.events INFO:  eta: 0:52:19  iter: 1779  total_loss: 0.247  loss_cls: 0.1052  loss_box_reg: 0.1064  loss_contrastive: 0.01511  loss_rpn_cls: 0.01621  loss_rpn_loc: 0.00866  time: 0.9095  data_time: 0.1800  lr: 0.004  max_mem: 7902M
+[03/20 21:35:05] d2.utils.events INFO:  eta: 0:52:02  iter: 1799  total_loss: 0.3042  loss_cls: 0.1305  loss_box_reg: 0.1266  loss_contrastive: 0.01484  loss_rpn_cls: 0.01777  loss_rpn_loc: 0.009885  total_val_loss: 0.2598  val_loss_box_reg: 0.0956  val_loss_cls: 0.111  val_loss_contrastive: 0.01556  val_loss_rpn_cls: 0.02634  val_loss_rpn_loc: 0.01127  time: 0.9096  data_time: 0.1875  lr: 0.004  max_mem: 7902M
+[03/20 21:35:24] d2.utils.events INFO:  eta: 0:51:47  iter: 1819  total_loss: 0.2775  loss_cls: 0.1183  loss_box_reg: 0.1113  loss_contrastive: 0.01528  loss_rpn_cls: 0.01885  loss_rpn_loc: 0.009911  time: 0.9101  data_time: 0.1873  lr: 0.004  max_mem: 7902M
+[03/20 21:35:44] d2.utils.events INFO:  eta: 0:51:31  iter: 1839  total_loss: 0.3032  loss_cls: 0.127  loss_box_reg: 0.1311  loss_contrastive: 0.01459  loss_rpn_cls: 0.01944  loss_rpn_loc: 0.009991  time: 0.9104  data_time: 0.2005  lr: 0.004  max_mem: 7902M
+[03/20 21:36:02] d2.utils.events INFO:  eta: 0:51:15  iter: 1859  total_loss: 0.2971  loss_cls: 0.1247  loss_box_reg: 0.1245  loss_contrastive: 0.01446  loss_rpn_cls: 0.0203  loss_rpn_loc: 0.0106  time: 0.9105  data_time: 0.1866  lr: 0.004  max_mem: 7902M
+[03/20 21:36:13] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0001871.pth
+[03/20 21:36:22] d2.utils.events INFO:  eta: 0:50:57  iter: 1879  total_loss: 0.2799  loss_cls: 0.122  loss_box_reg: 0.1183  loss_contrastive: 0.01463  loss_rpn_cls: 0.01706  loss_rpn_loc: 0.009791  time: 0.9106  data_time: 0.1873  lr: 0.004  max_mem: 7902M
+[03/20 21:36:22] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:36:22] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:36:22] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:36:23] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:36:23] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:36:26] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0013 s/iter. Inference: 0.1403 s/iter. Eval: 0.0002 s/iter. Total: 0.1419 s/iter. ETA=0:00:28
+[03/20 21:36:31] d2.evaluation.evaluator INFO: Inference done 46/215. Dataloading: 0.0015 s/iter. Inference: 0.1415 s/iter. Eval: 0.0002 s/iter. Total: 0.1433 s/iter. ETA=0:00:24
+[03/20 21:36:36] d2.evaluation.evaluator INFO: Inference done 81/215. Dataloading: 0.0014 s/iter. Inference: 0.1416 s/iter. Eval: 0.0002 s/iter. Total: 0.1433 s/iter. ETA=0:00:19
+[03/20 21:36:41] d2.evaluation.evaluator INFO: Inference done 117/215. Dataloading: 0.0014 s/iter. Inference: 0.1414 s/iter. Eval: 0.0002 s/iter. Total: 0.1431 s/iter. ETA=0:00:14
+[03/20 21:36:46] d2.evaluation.evaluator INFO: Inference done 153/215. Dataloading: 0.0014 s/iter. Inference: 0.1412 s/iter. Eval: 0.0002 s/iter. Total: 0.1429 s/iter. ETA=0:00:08
+[03/20 21:36:51] d2.evaluation.evaluator INFO: Inference done 188/215. Dataloading: 0.0014 s/iter. Inference: 0.1416 s/iter. Eval: 0.0002 s/iter. Total: 0.1433 s/iter. ETA=0:00:03
+[03/20 21:36:55] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.349561 (0.144522 s / iter per device, on 4 devices)
+[03/20 21:36:55] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.141644 s / iter per device, on 4 devices)
+[03/20 21:36:56] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:36:56] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:36:56] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:36:57] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl  |
+|:-----:|:------:|:------:|:-----:|:-----:|:-----:|
+| 6.802 | 23.177 | 1.919  | 0.000 | 4.270 | 9.645 |
+[03/20 21:36:57] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:36:57] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:36:57] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:36:57] d2.evaluation.testing INFO: copypaste: 6.8023,23.1769,1.9186,0.0000,4.2699,9.6448
+[03/20 21:37:16] d2.utils.events INFO:  eta: 0:50:42  iter: 1899  total_loss: 0.2605  loss_cls: 0.1092  loss_box_reg: 0.1088  loss_contrastive: 0.01502  loss_rpn_cls: 0.01664  loss_rpn_loc: 0.008648  total_val_loss: 0.2487  val_loss_box_reg: 0.09863  val_loss_cls: 0.1113  val_loss_contrastive: 0.01497  val_loss_rpn_cls: 0.01469  val_loss_rpn_loc: 0.009078  time: 0.9110  data_time: 0.1931  lr: 0.004  max_mem: 7902M
+[03/20 21:37:35] d2.utils.events INFO:  eta: 0:50:25  iter: 1919  total_loss: 0.2945  loss_cls: 0.1199  loss_box_reg: 0.1253  loss_contrastive: 0.01459  loss_rpn_cls: 0.02306  loss_rpn_loc: 0.01215  time: 0.9116  data_time: 0.1973  lr: 0.004  max_mem: 7902M
+[03/20 21:37:55] d2.utils.events INFO:  eta: 0:50:09  iter: 1939  total_loss: 0.2684  loss_cls: 0.1166  loss_box_reg: 0.1161  loss_contrastive: 0.01473  loss_rpn_cls: 0.01649  loss_rpn_loc: 0.009379  time: 0.9119  data_time: 0.2004  lr: 0.004  max_mem: 7902M
+[03/20 21:38:14] d2.utils.events INFO:  eta: 0:49:52  iter: 1959  total_loss: 0.2976  loss_cls: 0.1239  loss_box_reg: 0.1224  loss_contrastive: 0.0147  loss_rpn_cls: 0.01858  loss_rpn_loc: 0.01042  time: 0.9121  data_time: 0.1892  lr: 0.004  max_mem: 7902M
+[03/20 21:38:32] d2.utils.events INFO:  eta: 0:49:36  iter: 1979  total_loss: 0.2804  loss_cls: 0.1183  loss_box_reg: 0.1258  loss_contrastive: 0.01463  loss_rpn_cls: 0.01744  loss_rpn_loc: 0.009227  time: 0.9123  data_time: 0.1929  lr: 0.004  max_mem: 7902M
+[03/20 21:38:52] d2.utils.events INFO:  eta: 0:49:19  iter: 1999  total_loss: 0.2623  loss_cls: 0.1064  loss_box_reg: 0.1087  loss_contrastive: 0.01495  loss_rpn_cls: 0.01913  loss_rpn_loc: 0.009326  total_val_loss: 0.2432  val_loss_box_reg: 0.1029  val_loss_cls: 0.09698  val_loss_contrastive: 0.01441  val_loss_rpn_cls: 0.02189  val_loss_rpn_loc: 0.007021  time: 0.9125  data_time: 0.1874  lr: 0.004  max_mem: 7902M
+[03/20 21:39:11] d2.utils.events INFO:  eta: 0:49:04  iter: 2019  total_loss: 0.2658  loss_cls: 0.1081  loss_box_reg: 0.1122  loss_contrastive: 0.01472  loss_rpn_cls: 0.01525  loss_rpn_loc: 0.009396  time: 0.9129  data_time: 0.1872  lr: 0.004  max_mem: 7902M
+[03/20 21:39:31] d2.utils.events INFO:  eta: 0:48:47  iter: 2039  total_loss: 0.2846  loss_cls: 0.1236  loss_box_reg: 0.1224  loss_contrastive: 0.01496  loss_rpn_cls: 0.01661  loss_rpn_loc: 0.009237  time: 0.9133  data_time: 0.2068  lr: 0.004  max_mem: 7902M
+[03/20 21:39:49] d2.utils.events INFO:  eta: 0:48:30  iter: 2059  total_loss: 0.2828  loss_cls: 0.1258  loss_box_reg: 0.1147  loss_contrastive: 0.01451  loss_rpn_cls: 0.01732  loss_rpn_loc: 0.01028  time: 0.9135  data_time: 0.1897  lr: 0.004  max_mem: 7902M
+[03/20 21:40:08] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0002079.pth
+[03/20 21:40:09] d2.utils.events INFO:  eta: 0:48:14  iter: 2079  total_loss: 0.2742  loss_cls: 0.1095  loss_box_reg: 0.1157  loss_contrastive: 0.01475  loss_rpn_cls: 0.01453  loss_rpn_loc: 0.00993  time: 0.9136  data_time: 0.1846  lr: 0.004  max_mem: 7902M
+[03/20 21:40:18] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:40:18] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:40:18] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:40:18] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:40:18] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:40:21] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0013 s/iter. Inference: 0.1417 s/iter. Eval: 0.0002 s/iter. Total: 0.1432 s/iter. ETA=0:00:29
+[03/20 21:40:26] d2.evaluation.evaluator INFO: Inference done 47/215. Dataloading: 0.0013 s/iter. Inference: 0.1401 s/iter. Eval: 0.0002 s/iter. Total: 0.1417 s/iter. ETA=0:00:23
+[03/20 21:40:31] d2.evaluation.evaluator INFO: Inference done 83/215. Dataloading: 0.0014 s/iter. Inference: 0.1403 s/iter. Eval: 0.0002 s/iter. Total: 0.1419 s/iter. ETA=0:00:18
+[03/20 21:40:36] d2.evaluation.evaluator INFO: Inference done 118/215. Dataloading: 0.0014 s/iter. Inference: 0.1407 s/iter. Eval: 0.0002 s/iter. Total: 0.1424 s/iter. ETA=0:00:13
+[03/20 21:40:42] d2.evaluation.evaluator INFO: Inference done 154/215. Dataloading: 0.0014 s/iter. Inference: 0.1405 s/iter. Eval: 0.0002 s/iter. Total: 0.1421 s/iter. ETA=0:00:08
+[03/20 21:40:47] d2.evaluation.evaluator INFO: Inference done 190/215. Dataloading: 0.0014 s/iter. Inference: 0.1401 s/iter. Eval: 0.0002 s/iter. Total: 0.1417 s/iter. ETA=0:00:03
+[03/20 21:40:50] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.018745 (0.142946 s / iter per device, on 4 devices)
+[03/20 21:40:50] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.140251 s / iter per device, on 4 devices)
+[03/20 21:40:51] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:40:51] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:40:51] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:40:52] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.374 | 22.855 | 2.645  | 0.000 | 4.697 | 10.683 |
+[03/20 21:40:52] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:40:52] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:40:52] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:40:52] d2.evaluation.testing INFO: copypaste: 7.3738,22.8548,2.6449,0.0000,4.6971,10.6829
+[03/20 21:41:01] d2.utils.events INFO:  eta: 0:47:57  iter: 2099  total_loss: 0.2783  loss_cls: 0.1145  loss_box_reg: 0.1092  loss_contrastive: 0.01457  loss_rpn_cls: 0.01628  loss_rpn_loc: 0.01065  total_val_loss: 0.2485  val_loss_box_reg: 0.09709  val_loss_cls: 0.1143  val_loss_contrastive: 0.0142  val_loss_rpn_cls: 0.01605  val_loss_rpn_loc: 0.006928  time: 0.9137  data_time: 0.1842  lr: 0.004  max_mem: 7902M
+[03/20 21:41:20] d2.utils.events INFO:  eta: 0:47:41  iter: 2119  total_loss: 0.2462  loss_cls: 0.1046  loss_box_reg: 0.1053  loss_contrastive: 0.01461  loss_rpn_cls: 0.01458  loss_rpn_loc: 0.008023  time: 0.9139  data_time: 0.1856  lr: 0.004  max_mem: 7902M
+[03/20 21:41:40] d2.utils.events INFO:  eta: 0:47:24  iter: 2139  total_loss: 0.2653  loss_cls: 0.1134  loss_box_reg: 0.1119  loss_contrastive: 0.01474  loss_rpn_cls: 0.01644  loss_rpn_loc: 0.009554  time: 0.9141  data_time: 0.1892  lr: 0.004  max_mem: 7902M
+[03/20 21:41:58] d2.utils.events INFO:  eta: 0:47:06  iter: 2159  total_loss: 0.2871  loss_cls: 0.1176  loss_box_reg: 0.1123  loss_contrastive: 0.01446  loss_rpn_cls: 0.0186  loss_rpn_loc: 0.01021  time: 0.9141  data_time: 0.1798  lr: 0.004  max_mem: 7902M
+[03/20 21:42:17] d2.utils.events INFO:  eta: 0:46:49  iter: 2179  total_loss: 0.2874  loss_cls: 0.12  loss_box_reg: 0.1189  loss_contrastive: 0.01452  loss_rpn_cls: 0.01673  loss_rpn_loc: 0.009506  time: 0.9142  data_time: 0.1891  lr: 0.004  max_mem: 7902M
+[03/20 21:42:36] d2.utils.events INFO:  eta: 0:46:33  iter: 2199  total_loss: 0.3069  loss_cls: 0.1336  loss_box_reg: 0.1329  loss_contrastive: 0.01466  loss_rpn_cls: 0.01699  loss_rpn_loc: 0.009395  total_val_loss: 0.2494  val_loss_box_reg: 0.1054  val_loss_cls: 0.1013  val_loss_contrastive: 0.01452  val_loss_rpn_cls: 0.01762  val_loss_rpn_loc: 0.01057  time: 0.9144  data_time: 0.1808  lr: 0.004  max_mem: 7902M
+[03/20 21:42:55] d2.utils.events INFO:  eta: 0:46:15  iter: 2219  total_loss: 0.3042  loss_cls: 0.1311  loss_box_reg: 0.13  loss_contrastive: 0.0145  loss_rpn_cls: 0.0179  loss_rpn_loc: 0.01011  time: 0.9146  data_time: 0.1810  lr: 0.004  max_mem: 7902M
+[03/20 21:43:14] d2.utils.events INFO:  eta: 0:45:57  iter: 2239  total_loss: 0.306  loss_cls: 0.1247  loss_box_reg: 0.1277  loss_contrastive: 0.0145  loss_rpn_cls: 0.02364  loss_rpn_loc: 0.01108  time: 0.9149  data_time: 0.2064  lr: 0.004  max_mem: 7902M
+[03/20 21:43:33] d2.utils.events INFO:  eta: 0:45:38  iter: 2259  total_loss: 0.2957  loss_cls: 0.1218  loss_box_reg: 0.1312  loss_contrastive: 0.01455  loss_rpn_cls: 0.0157  loss_rpn_loc: 0.009841  time: 0.9150  data_time: 0.1928  lr: 0.004  max_mem: 7902M
+[03/20 21:43:51] d2.utils.events INFO:  eta: 0:45:21  iter: 2279  total_loss: 0.2943  loss_cls: 0.125  loss_box_reg: 0.124  loss_contrastive: 0.01464  loss_rpn_cls: 0.01359  loss_rpn_loc: 0.009693  time: 0.9151  data_time: 0.1849  lr: 0.004  max_mem: 7902M
+[03/20 21:43:59] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0002287.pth
+[03/20 21:44:10] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:44:10] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:44:10] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:44:10] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:44:10] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:44:13] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0012 s/iter. Inference: 0.1405 s/iter. Eval: 0.0002 s/iter. Total: 0.1420 s/iter. ETA=0:00:28
+[03/20 21:44:18] d2.evaluation.evaluator INFO: Inference done 47/215. Dataloading: 0.0014 s/iter. Inference: 0.1409 s/iter. Eval: 0.0002 s/iter. Total: 0.1426 s/iter. ETA=0:00:23
+[03/20 21:44:23] d2.evaluation.evaluator INFO: Inference done 82/215. Dataloading: 0.0014 s/iter. Inference: 0.1427 s/iter. Eval: 0.0002 s/iter. Total: 0.1444 s/iter. ETA=0:00:19
+[03/20 21:44:29] d2.evaluation.evaluator INFO: Inference done 118/215. Dataloading: 0.0014 s/iter. Inference: 0.1420 s/iter. Eval: 0.0002 s/iter. Total: 0.1437 s/iter. ETA=0:00:13
+[03/20 21:44:34] d2.evaluation.evaluator INFO: Inference done 154/215. Dataloading: 0.0014 s/iter. Inference: 0.1417 s/iter. Eval: 0.0002 s/iter. Total: 0.1434 s/iter. ETA=0:00:08
+[03/20 21:44:39] d2.evaluation.evaluator INFO: Inference done 189/215. Dataloading: 0.0014 s/iter. Inference: 0.1418 s/iter. Eval: 0.0002 s/iter. Total: 0.1435 s/iter. ETA=0:00:03
+[03/20 21:44:43] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.333214 (0.144444 s / iter per device, on 4 devices)
+[03/20 21:44:43] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.141660 s / iter per device, on 4 devices)
+[03/20 21:44:43] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:44:43] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:44:43] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:44:44] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.367 | 24.079 | 2.400  | 0.000 | 5.489 | 10.106 |
+[03/20 21:44:44] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:44:44] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:44:44] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:44:44] d2.evaluation.testing INFO: copypaste: 7.3672,24.0787,2.4004,0.0000,5.4892,10.1062
+[03/20 21:44:46] d2.utils.events INFO:  eta: 0:45:01  iter: 2299  total_loss: 0.2649  loss_cls: 0.1109  loss_box_reg: 0.1166  loss_contrastive: 0.01428  loss_rpn_cls: 0.01667  loss_rpn_loc: 0.009135  total_val_loss: 0.2301  val_loss_box_reg: 0.08199  val_loss_cls: 0.09721  val_loss_contrastive: 0.014  val_loss_rpn_cls: 0.02925  val_loss_rpn_loc: 0.007652  time: 0.9152  data_time: 0.1825  lr: 0.004  max_mem: 7902M
+[03/20 21:45:04] d2.utils.events INFO:  eta: 0:44:43  iter: 2319  total_loss: 0.2827  loss_cls: 0.1146  loss_box_reg: 0.1182  loss_contrastive: 0.01487  loss_rpn_cls: 0.01433  loss_rpn_loc: 0.009486  time: 0.9153  data_time: 0.1862  lr: 0.004  max_mem: 7902M
+[03/20 21:45:24] d2.utils.events INFO:  eta: 0:44:25  iter: 2339  total_loss: 0.2939  loss_cls: 0.1259  loss_box_reg: 0.1184  loss_contrastive: 0.0144  loss_rpn_cls: 0.01728  loss_rpn_loc: 0.01037  time: 0.9155  data_time: 0.1954  lr: 0.004  max_mem: 7902M
+[03/20 21:45:42] d2.utils.events INFO:  eta: 0:44:06  iter: 2359  total_loss: 0.2855  loss_cls: 0.1165  loss_box_reg: 0.1236  loss_contrastive: 0.01453  loss_rpn_cls: 0.01732  loss_rpn_loc: 0.009737  time: 0.9155  data_time: 0.1797  lr: 0.004  max_mem: 7902M
+[03/20 21:46:01] d2.utils.events INFO:  eta: 0:43:47  iter: 2379  total_loss: 0.278  loss_cls: 0.1176  loss_box_reg: 0.1257  loss_contrastive: 0.01448  loss_rpn_cls: 0.01562  loss_rpn_loc: 0.01064  time: 0.9155  data_time: 0.1863  lr: 0.004  max_mem: 7902M
+[03/20 21:46:20] d2.utils.events INFO:  eta: 0:43:29  iter: 2399  total_loss: 0.2701  loss_cls: 0.1123  loss_box_reg: 0.1102  loss_contrastive: 0.01427  loss_rpn_cls: 0.0177  loss_rpn_loc: 0.008491  total_val_loss: 0.2417  val_loss_box_reg: 0.09237  val_loss_cls: 0.09668  val_loss_contrastive: 0.0142  val_loss_rpn_cls: 0.02941  val_loss_rpn_loc: 0.009093  time: 0.9156  data_time: 0.1875  lr: 0.004  max_mem: 7902M
+[03/20 21:46:39] d2.utils.events INFO:  eta: 0:43:11  iter: 2419  total_loss: 0.2748  loss_cls: 0.115  loss_box_reg: 0.1226  loss_contrastive: 0.0146  loss_rpn_cls: 0.01472  loss_rpn_loc: 0.009359  time: 0.9158  data_time: 0.1887  lr: 0.004  max_mem: 7902M
+[03/20 21:46:58] d2.utils.events INFO:  eta: 0:42:53  iter: 2439  total_loss: 0.2647  loss_cls: 0.1092  loss_box_reg: 0.1175  loss_contrastive: 0.01486  loss_rpn_cls: 0.01388  loss_rpn_loc: 0.008101  time: 0.9160  data_time: 0.2056  lr: 0.004  max_mem: 7902M
+[03/20 21:47:17] d2.utils.events INFO:  eta: 0:42:34  iter: 2459  total_loss: 0.2914  loss_cls: 0.1197  loss_box_reg: 0.1278  loss_contrastive: 0.01467  loss_rpn_cls: 0.01532  loss_rpn_loc: 0.009755  time: 0.9162  data_time: 0.1904  lr: 0.004  max_mem: 7902M
+[03/20 21:47:36] d2.utils.events INFO:  eta: 0:42:17  iter: 2479  total_loss: 0.2793  loss_cls: 0.1153  loss_box_reg: 0.1153  loss_contrastive: 0.01439  loss_rpn_cls: 0.01695  loss_rpn_loc: 0.008937  time: 0.9164  data_time: 0.1871  lr: 0.004  max_mem: 7902M
+[03/20 21:47:51] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0002495.pth
+[03/20 21:47:56] d2.utils.events INFO:  eta: 0:41:59  iter: 2499  total_loss: 0.2658  loss_cls: 0.1138  loss_box_reg: 0.113  loss_contrastive: 0.01424  loss_rpn_cls: 0.01897  loss_rpn_loc: 0.009197  total_val_loss: 0.2453  val_loss_box_reg: 0.09343  val_loss_cls: 0.106  val_loss_contrastive: 0.01415  val_loss_rpn_cls: 0.02294  val_loss_rpn_loc: 0.008763  time: 0.9164  data_time: 0.1844  lr: 0.004  max_mem: 7902M
+[03/20 21:48:03] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:48:03] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:48:03] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:48:03] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:48:03] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:48:07] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0011 s/iter. Inference: 0.1423 s/iter. Eval: 0.0002 s/iter. Total: 0.1436 s/iter. ETA=0:00:29
+[03/20 21:48:12] d2.evaluation.evaluator INFO: Inference done 46/215. Dataloading: 0.0014 s/iter. Inference: 0.1421 s/iter. Eval: 0.0002 s/iter. Total: 0.1438 s/iter. ETA=0:00:24
+[03/20 21:48:17] d2.evaluation.evaluator INFO: Inference done 81/215. Dataloading: 0.0014 s/iter. Inference: 0.1424 s/iter. Eval: 0.0002 s/iter. Total: 0.1441 s/iter. ETA=0:00:19
+[03/20 21:48:22] d2.evaluation.evaluator INFO: Inference done 117/215. Dataloading: 0.0014 s/iter. Inference: 0.1420 s/iter. Eval: 0.0002 s/iter. Total: 0.1437 s/iter. ETA=0:00:14
+[03/20 21:48:27] d2.evaluation.evaluator INFO: Inference done 152/215. Dataloading: 0.0014 s/iter. Inference: 0.1419 s/iter. Eval: 0.0002 s/iter. Total: 0.1436 s/iter. ETA=0:00:09
+[03/20 21:48:32] d2.evaluation.evaluator INFO: Inference done 188/215. Dataloading: 0.0014 s/iter. Inference: 0.1417 s/iter. Eval: 0.0002 s/iter. Total: 0.1434 s/iter. ETA=0:00:03
+[03/20 21:48:36] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.347094 (0.144510 s / iter per device, on 4 devices)
+[03/20 21:48:36] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.141625 s / iter per device, on 4 devices)
+[03/20 21:48:36] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:48:36] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:48:36] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:48:37] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl  |
+|:-----:|:------:|:------:|:-----:|:-----:|:-----:|
+| 6.531 | 21.667 | 2.085  | 0.000 | 4.369 | 9.322 |
+[03/20 21:48:37] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:48:37] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:48:37] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:48:37] d2.evaluation.testing INFO: copypaste: 6.5305,21.6668,2.0853,0.0000,4.3692,9.3223
+[03/20 21:48:48] d2.utils.events INFO:  eta: 0:41:40  iter: 2519  total_loss: 0.263  loss_cls: 0.108  loss_box_reg: 0.106  loss_contrastive: 0.01456  loss_rpn_cls: 0.01836  loss_rpn_loc: 0.00905  time: 0.9165  data_time: 0.1821  lr: 0.0004  max_mem: 7902M
+[03/20 21:49:08] d2.utils.events INFO:  eta: 0:41:22  iter: 2539  total_loss: 0.2878  loss_cls: 0.1139  loss_box_reg: 0.117  loss_contrastive: 0.01452  loss_rpn_cls: 0.01618  loss_rpn_loc: 0.009029  time: 0.9168  data_time: 0.2073  lr: 0.0004  max_mem: 7902M
+[03/20 21:49:27] d2.utils.events INFO:  eta: 0:41:05  iter: 2559  total_loss: 0.2856  loss_cls: 0.1171  loss_box_reg: 0.124  loss_contrastive: 0.01442  loss_rpn_cls: 0.0193  loss_rpn_loc: 0.00985  time: 0.9169  data_time: 0.1922  lr: 0.0004  max_mem: 7902M
+[03/20 21:49:46] d2.utils.events INFO:  eta: 0:40:47  iter: 2579  total_loss: 0.2729  loss_cls: 0.1088  loss_box_reg: 0.1211  loss_contrastive: 0.0144  loss_rpn_cls: 0.0144  loss_rpn_loc: 0.01071  time: 0.9173  data_time: 0.1934  lr: 0.0004  max_mem: 7902M
+[03/20 21:50:07] d2.utils.events INFO:  eta: 0:40:31  iter: 2599  total_loss: 0.2558  loss_cls: 0.1075  loss_box_reg: 0.1137  loss_contrastive: 0.01445  loss_rpn_cls: 0.01542  loss_rpn_loc: 0.007467  total_val_loss: 0.2337  val_loss_box_reg: 0.08215  val_loss_cls: 0.09058  val_loss_contrastive: 0.01443  val_loss_rpn_cls: 0.03495  val_loss_rpn_loc: 0.01159  time: 0.9180  data_time: 0.2023  lr: 0.0004  max_mem: 7902M
+[03/20 21:50:28] d2.utils.events INFO:  eta: 0:40:14  iter: 2619  total_loss: 0.2714  loss_cls: 0.1081  loss_box_reg: 0.1259  loss_contrastive: 0.01447  loss_rpn_cls: 0.01465  loss_rpn_loc: 0.0102  time: 0.9188  data_time: 0.2015  lr: 0.0004  max_mem: 7902M
+[03/20 21:50:49] d2.utils.events INFO:  eta: 0:39:58  iter: 2639  total_loss: 0.2833  loss_cls: 0.1127  loss_box_reg: 0.1255  loss_contrastive: 0.01457  loss_rpn_cls: 0.01211  loss_rpn_loc: 0.008664  time: 0.9195  data_time: 0.2106  lr: 0.0004  max_mem: 7902M
+[03/20 21:51:09] d2.utils.events INFO:  eta: 0:39:42  iter: 2659  total_loss: 0.2541  loss_cls: 0.1037  loss_box_reg: 0.1107  loss_contrastive: 0.01434  loss_rpn_cls: 0.01328  loss_rpn_loc: 0.008633  time: 0.9202  data_time: 0.2058  lr: 0.0004  max_mem: 7902M
+[03/20 21:51:29] d2.utils.events INFO:  eta: 0:39:26  iter: 2679  total_loss: 0.2565  loss_cls: 0.1031  loss_box_reg: 0.1186  loss_contrastive: 0.01444  loss_rpn_cls: 0.01467  loss_rpn_loc: 0.009085  time: 0.9209  data_time: 0.1981  lr: 0.0004  max_mem: 7902M
+[03/20 21:51:50] d2.utils.events INFO:  eta: 0:39:09  iter: 2699  total_loss: 0.2793  loss_cls: 0.1132  loss_box_reg: 0.1247  loss_contrastive: 0.01433  loss_rpn_cls: 0.01442  loss_rpn_loc: 0.009132  total_val_loss: 0.2369  val_loss_box_reg: 0.1096  val_loss_cls: 0.0947  val_loss_contrastive: 0.01436  val_loss_rpn_cls: 0.01213  val_loss_rpn_loc: 0.006068  time: 0.9215  data_time: 0.2021  lr: 0.0004  max_mem: 7902M
+[03/20 21:51:54] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0002703.pth
+[03/20 21:52:08] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:52:08] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:52:08] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:52:08] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:52:08] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:52:12] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0020 s/iter. Inference: 0.1533 s/iter. Eval: 0.0003 s/iter. Total: 0.1556 s/iter. ETA=0:00:31
+[03/20 21:52:17] d2.evaluation.evaluator INFO: Inference done 44/215. Dataloading: 0.0023 s/iter. Inference: 0.1498 s/iter. Eval: 0.0003 s/iter. Total: 0.1524 s/iter. ETA=0:00:26
+[03/20 21:52:22] d2.evaluation.evaluator INFO: Inference done 77/215. Dataloading: 0.0022 s/iter. Inference: 0.1498 s/iter. Eval: 0.0003 s/iter. Total: 0.1523 s/iter. ETA=0:00:21
+[03/20 21:52:27] d2.evaluation.evaluator INFO: Inference done 110/215. Dataloading: 0.0022 s/iter. Inference: 0.1500 s/iter. Eval: 0.0003 s/iter. Total: 0.1525 s/iter. ETA=0:00:16
+[03/20 21:52:32] d2.evaluation.evaluator INFO: Inference done 143/215. Dataloading: 0.0021 s/iter. Inference: 0.1501 s/iter. Eval: 0.0003 s/iter. Total: 0.1525 s/iter. ETA=0:00:10
+[03/20 21:52:37] d2.evaluation.evaluator INFO: Inference done 176/215. Dataloading: 0.0020 s/iter. Inference: 0.1500 s/iter. Eval: 0.0003 s/iter. Total: 0.1523 s/iter. ETA=0:00:05
+[03/20 21:52:42] d2.evaluation.evaluator INFO: Inference done 209/215. Dataloading: 0.0020 s/iter. Inference: 0.1500 s/iter. Eval: 0.0003 s/iter. Total: 0.1523 s/iter. ETA=0:00:00
+[03/20 21:52:43] d2.evaluation.evaluator INFO: Total inference time: 0:00:32.313186 (0.153872 s / iter per device, on 4 devices)
+[03/20 21:52:43] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:31 (0.149976 s / iter per device, on 4 devices)
+[03/20 21:52:44] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:52:44] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:52:44] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:52:45] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.912 | 24.673 | 2.780  | 0.000 | 5.171 | 11.127 |
+[03/20 21:52:45] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:52:45] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:52:45] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:52:45] d2.evaluation.testing INFO: copypaste: 7.9120,24.6727,2.7800,0.0000,5.1714,11.1266
+[03/20 21:52:48] d2.utils.events INFO:  eta: 0:38:53  iter: 2719  total_loss: 0.2838  loss_cls: 0.1221  loss_box_reg: 0.1203  loss_contrastive: 0.01433  loss_rpn_cls: 0.01391  loss_rpn_loc: 0.009773  time: 0.9222  data_time: 0.2041  lr: 0.0004  max_mem: 7902M
+[03/20 21:53:09] d2.utils.events INFO:  eta: 0:38:36  iter: 2739  total_loss: 0.2705  loss_cls: 0.1074  loss_box_reg: 0.1178  loss_contrastive: 0.01443  loss_rpn_cls: 0.01457  loss_rpn_loc: 0.009142  time: 0.9229  data_time: 0.2169  lr: 0.0004  max_mem: 7902M
+[03/20 21:53:29] d2.utils.events INFO:  eta: 0:38:18  iter: 2759  total_loss: 0.2619  loss_cls: 0.1126  loss_box_reg: 0.115  loss_contrastive: 0.01447  loss_rpn_cls: 0.01312  loss_rpn_loc: 0.008813  time: 0.9233  data_time: 0.1971  lr: 0.0004  max_mem: 7902M
+[03/20 21:53:49] d2.utils.events INFO:  eta: 0:38:02  iter: 2779  total_loss: 0.2813  loss_cls: 0.1144  loss_box_reg: 0.1215  loss_contrastive: 0.01444  loss_rpn_cls: 0.01667  loss_rpn_loc: 0.01014  time: 0.9239  data_time: 0.2059  lr: 0.0004  max_mem: 7902M
+[03/20 21:54:10] d2.utils.events INFO:  eta: 0:37:45  iter: 2799  total_loss: 0.2723  loss_cls: 0.1126  loss_box_reg: 0.1227  loss_contrastive: 0.01445  loss_rpn_cls: 0.01502  loss_rpn_loc: 0.01015  total_val_loss: 0.3077  val_loss_box_reg: 0.1131  val_loss_cls: 0.1213  val_loss_contrastive: 0.01399  val_loss_rpn_cls: 0.04338  val_loss_rpn_loc: 0.01587  time: 0.9244  data_time: 0.2077  lr: 0.0004  max_mem: 7902M
+[03/20 21:54:30] d2.utils.events INFO:  eta: 0:37:26  iter: 2819  total_loss: 0.2629  loss_cls: 0.1066  loss_box_reg: 0.1118  loss_contrastive: 0.01437  loss_rpn_cls: 0.01389  loss_rpn_loc: 0.009058  time: 0.9250  data_time: 0.2013  lr: 0.0004  max_mem: 7902M
+[03/20 21:54:51] d2.utils.events INFO:  eta: 0:37:10  iter: 2839  total_loss: 0.2641  loss_cls: 0.1078  loss_box_reg: 0.1119  loss_contrastive: 0.01436  loss_rpn_cls: 0.01537  loss_rpn_loc: 0.007749  time: 0.9256  data_time: 0.2181  lr: 0.0004  max_mem: 7902M
+[03/20 21:55:11] d2.utils.events INFO:  eta: 0:36:54  iter: 2859  total_loss: 0.2566  loss_cls: 0.1036  loss_box_reg: 0.1158  loss_contrastive: 0.01432  loss_rpn_cls: 0.01448  loss_rpn_loc: 0.008691  time: 0.9261  data_time: 0.2090  lr: 0.0004  max_mem: 7902M
+[03/20 21:55:31] d2.utils.events INFO:  eta: 0:36:38  iter: 2879  total_loss: 0.2895  loss_cls: 0.1165  loss_box_reg: 0.1293  loss_contrastive: 0.01424  loss_rpn_cls: 0.01396  loss_rpn_loc: 0.009219  time: 0.9266  data_time: 0.2014  lr: 0.0004  max_mem: 7902M
+[03/20 21:55:51] d2.utils.events INFO:  eta: 0:36:20  iter: 2899  total_loss: 0.2919  loss_cls: 0.1136  loss_box_reg: 0.1158  loss_contrastive: 0.01409  loss_rpn_cls: 0.01611  loss_rpn_loc: 0.009797  total_val_loss: 0.2482  val_loss_box_reg: 0.1003  val_loss_cls: 0.1041  val_loss_contrastive: 0.01402  val_loss_rpn_cls: 0.02408  val_loss_rpn_loc: 0.005726  time: 0.9271  data_time: 0.2044  lr: 0.0004  max_mem: 7902M
+[03/20 21:56:04] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0002911.pth
+[03/20 21:56:13] d2.utils.events INFO:  eta: 0:36:03  iter: 2919  total_loss: 0.2652  loss_cls: 0.1088  loss_box_reg: 0.1127  loss_contrastive: 0.01429  loss_rpn_cls: 0.01519  loss_rpn_loc: 0.009074  time: 0.9278  data_time: 0.2067  lr: 0.0004  max_mem: 7902M
+[03/20 21:56:20] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 21:56:20] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 21:56:20] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 21:56:20] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 21:56:20] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 21:56:24] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0014 s/iter. Inference: 0.1516 s/iter. Eval: 0.0002 s/iter. Total: 0.1531 s/iter. ETA=0:00:31
+[03/20 21:56:29] d2.evaluation.evaluator INFO: Inference done 45/215. Dataloading: 0.0019 s/iter. Inference: 0.1472 s/iter. Eval: 0.0002 s/iter. Total: 0.1495 s/iter. ETA=0:00:25
+[03/20 21:56:34] d2.evaluation.evaluator INFO: Inference done 79/215. Dataloading: 0.0018 s/iter. Inference: 0.1481 s/iter. Eval: 0.0002 s/iter. Total: 0.1502 s/iter. ETA=0:00:20
+[03/20 21:56:39] d2.evaluation.evaluator INFO: Inference done 112/215. Dataloading: 0.0018 s/iter. Inference: 0.1485 s/iter. Eval: 0.0002 s/iter. Total: 0.1507 s/iter. ETA=0:00:15
+[03/20 21:56:44] d2.evaluation.evaluator INFO: Inference done 145/215. Dataloading: 0.0018 s/iter. Inference: 0.1489 s/iter. Eval: 0.0002 s/iter. Total: 0.1510 s/iter. ETA=0:00:10
+[03/20 21:56:49] d2.evaluation.evaluator INFO: Inference done 179/215. Dataloading: 0.0018 s/iter. Inference: 0.1488 s/iter. Eval: 0.0002 s/iter. Total: 0.1510 s/iter. ETA=0:00:05
+[03/20 21:56:54] d2.evaluation.evaluator INFO: Inference done 212/215. Dataloading: 0.0018 s/iter. Inference: 0.1492 s/iter. Eval: 0.0002 s/iter. Total: 0.1513 s/iter. ETA=0:00:00
+[03/20 21:56:55] d2.evaluation.evaluator INFO: Total inference time: 0:00:32.040129 (0.152572 s / iter per device, on 4 devices)
+[03/20 21:56:55] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:31 (0.149220 s / iter per device, on 4 devices)
+[03/20 21:56:55] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 21:56:55] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 21:56:55] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 21:56:56] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 8.063 | 24.620 | 3.004  | 0.000 | 5.198 | 11.486 |
+[03/20 21:56:56] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 21:56:56] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 21:56:56] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 21:56:56] d2.evaluation.testing INFO: copypaste: 8.0633,24.6196,3.0039,0.0000,5.1979,11.4857
+[03/20 21:57:11] d2.utils.events INFO:  eta: 0:35:48  iter: 2939  total_loss: 0.2538  loss_cls: 0.11  loss_box_reg: 0.1071  loss_contrastive: 0.01442  loss_rpn_cls: 0.01439  loss_rpn_loc: 0.008756  time: 0.9284  data_time: 0.2210  lr: 0.0004  max_mem: 7902M
+[03/20 21:57:31] d2.utils.events INFO:  eta: 0:35:31  iter: 2959  total_loss: 0.2805  loss_cls: 0.1131  loss_box_reg: 0.1321  loss_contrastive: 0.01438  loss_rpn_cls: 0.01641  loss_rpn_loc: 0.009751  time: 0.9290  data_time: 0.2158  lr: 0.0004  max_mem: 7902M
+[03/20 21:57:51] d2.utils.events INFO:  eta: 0:35:16  iter: 2979  total_loss: 0.2815  loss_cls: 0.1086  loss_box_reg: 0.1212  loss_contrastive: 0.01437  loss_rpn_cls: 0.0151  loss_rpn_loc: 0.009326  time: 0.9295  data_time: 0.2052  lr: 0.0004  max_mem: 7902M
+[03/20 21:58:12] d2.utils.events INFO:  eta: 0:35:00  iter: 2999  total_loss: 0.2546  loss_cls: 0.1075  loss_box_reg: 0.108  loss_contrastive: 0.01441  loss_rpn_cls: 0.01511  loss_rpn_loc: 0.008342  total_val_loss: 0.216  val_loss_box_reg: 0.07565  val_loss_cls: 0.09717  val_loss_contrastive: 0.01448  val_loss_rpn_cls: 0.02042  val_loss_rpn_loc: 0.008248  time: 0.9300  data_time: 0.2103  lr: 0.0004  max_mem: 7902M
+[03/20 21:58:33] d2.utils.events INFO:  eta: 0:34:43  iter: 3019  total_loss: 0.2794  loss_cls: 0.112  loss_box_reg: 0.122  loss_contrastive: 0.01432  loss_rpn_cls: 0.01615  loss_rpn_loc: 0.009682  time: 0.9307  data_time: 0.2093  lr: 0.0004  max_mem: 7902M
+[03/20 21:58:53] d2.utils.events INFO:  eta: 0:34:26  iter: 3039  total_loss: 0.2661  loss_cls: 0.1089  loss_box_reg: 0.1118  loss_contrastive: 0.01436  loss_rpn_cls: 0.01493  loss_rpn_loc: 0.009595  time: 0.9311  data_time: 0.2133  lr: 0.0004  max_mem: 7902M
+[03/20 21:59:13] d2.utils.events INFO:  eta: 0:34:09  iter: 3059  total_loss: 0.3026  loss_cls: 0.1212  loss_box_reg: 0.1348  loss_contrastive: 0.01422  loss_rpn_cls: 0.01952  loss_rpn_loc: 0.009976  time: 0.9315  data_time: 0.2055  lr: 0.0004  max_mem: 7902M
+[03/20 21:59:33] d2.utils.events INFO:  eta: 0:33:57  iter: 3079  total_loss: 0.2641  loss_cls: 0.1103  loss_box_reg: 0.1189  loss_contrastive: 0.0143  loss_rpn_cls: 0.01269  loss_rpn_loc: 0.009274  time: 0.9319  data_time: 0.1984  lr: 0.0004  max_mem: 7902M
+[03/20 21:59:53] d2.utils.events INFO:  eta: 0:33:43  iter: 3099  total_loss: 0.2691  loss_cls: 0.1062  loss_box_reg: 0.1163  loss_contrastive: 0.0143  loss_rpn_cls: 0.01557  loss_rpn_loc: 0.009603  total_val_loss: 0.27  val_loss_box_reg: 0.09522  val_loss_cls: 0.1129  val_loss_contrastive: 0.01419  val_loss_rpn_cls: 0.03759  val_loss_rpn_loc: 0.01013  time: 0.9322  data_time: 0.2039  lr: 0.0004  max_mem: 7902M
+[03/20 22:00:13] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0003119.pth
+[03/20 22:00:14] d2.utils.events INFO:  eta: 0:33:27  iter: 3119  total_loss: 0.2606  loss_cls: 0.108  loss_box_reg: 0.1149  loss_contrastive: 0.01423  loss_rpn_cls: 0.01509  loss_rpn_loc: 0.008991  time: 0.9327  data_time: 0.2018  lr: 0.0004  max_mem: 7902M
+[03/20 22:00:30] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:00:30] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:00:30] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:00:30] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:00:30] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:00:34] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0015 s/iter. Inference: 0.1467 s/iter. Eval: 0.0003 s/iter. Total: 0.1485 s/iter. ETA=0:00:30
+[03/20 22:00:39] d2.evaluation.evaluator INFO: Inference done 45/215. Dataloading: 0.0018 s/iter. Inference: 0.1479 s/iter. Eval: 0.0003 s/iter. Total: 0.1500 s/iter. ETA=0:00:25
+[03/20 22:00:44] d2.evaluation.evaluator INFO: Inference done 79/215. Dataloading: 0.0018 s/iter. Inference: 0.1484 s/iter. Eval: 0.0002 s/iter. Total: 0.1505 s/iter. ETA=0:00:20
+[03/20 22:00:49] d2.evaluation.evaluator INFO: Inference done 113/215. Dataloading: 0.0019 s/iter. Inference: 0.1485 s/iter. Eval: 0.0002 s/iter. Total: 0.1507 s/iter. ETA=0:00:15
+[03/20 22:00:54] d2.evaluation.evaluator INFO: Inference done 147/215. Dataloading: 0.0019 s/iter. Inference: 0.1485 s/iter. Eval: 0.0003 s/iter. Total: 0.1507 s/iter. ETA=0:00:10
+[03/20 22:00:59] d2.evaluation.evaluator INFO: Inference done 180/215. Dataloading: 0.0018 s/iter. Inference: 0.1487 s/iter. Eval: 0.0003 s/iter. Total: 0.1509 s/iter. ETA=0:00:05
+[03/20 22:01:04] d2.evaluation.evaluator INFO: Inference done 214/215. Dataloading: 0.0018 s/iter. Inference: 0.1488 s/iter. Eval: 0.0003 s/iter. Total: 0.1510 s/iter. ETA=0:00:00
+[03/20 22:01:05] d2.evaluation.evaluator INFO: Total inference time: 0:00:32.028966 (0.152519 s / iter per device, on 4 devices)
+[03/20 22:01:05] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:31 (0.148731 s / iter per device, on 4 devices)
+[03/20 22:01:05] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:01:05] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:01:05] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:01:07] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.541 | 23.536 | 2.702  | 0.000 | 5.049 | 10.526 |
+[03/20 22:01:07] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:01:07] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:01:07] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:01:07] d2.evaluation.testing INFO: copypaste: 7.5412,23.5363,2.7023,0.0000,5.0486,10.5261
+[03/20 22:01:12] d2.utils.events INFO:  eta: 0:33:11  iter: 3139  total_loss: 0.2756  loss_cls: 0.1105  loss_box_reg: 0.121  loss_contrastive: 0.01434  loss_rpn_cls: 0.01147  loss_rpn_loc: 0.008986  time: 0.9332  data_time: 0.2134  lr: 0.0004  max_mem: 7902M
+[03/20 22:01:32] d2.utils.events INFO:  eta: 0:32:59  iter: 3159  total_loss: 0.278  loss_cls: 0.1138  loss_box_reg: 0.1212  loss_contrastive: 0.01435  loss_rpn_cls: 0.01329  loss_rpn_loc: 0.009545  time: 0.9336  data_time: 0.2032  lr: 0.0004  max_mem: 7902M
+[03/20 22:01:51] d2.utils.events INFO:  eta: 0:32:46  iter: 3179  total_loss: 0.271  loss_cls: 0.1078  loss_box_reg: 0.1223  loss_contrastive: 0.01441  loss_rpn_cls: 0.01329  loss_rpn_loc: 0.008691  time: 0.9340  data_time: 0.2057  lr: 0.0004  max_mem: 7902M
+[03/20 22:02:12] d2.utils.events INFO:  eta: 0:32:33  iter: 3199  total_loss: 0.2664  loss_cls: 0.1081  loss_box_reg: 0.1198  loss_contrastive: 0.01438  loss_rpn_cls: 0.01313  loss_rpn_loc: 0.009082  total_val_loss: 0.199  val_loss_box_reg: 0.07749  val_loss_cls: 0.08486  val_loss_contrastive: 0.01454  val_loss_rpn_cls: 0.01634  val_loss_rpn_loc: 0.005787  time: 0.9345  data_time: 0.2068  lr: 0.0004  max_mem: 7902M
+[03/20 22:02:33] d2.utils.events INFO:  eta: 0:32:18  iter: 3219  total_loss: 0.2636  loss_cls: 0.1113  loss_box_reg: 0.1147  loss_contrastive: 0.01435  loss_rpn_cls: 0.01331  loss_rpn_loc: 0.008169  time: 0.9350  data_time: 0.2038  lr: 0.0004  max_mem: 7902M
+[03/20 22:02:53] d2.utils.events INFO:  eta: 0:32:02  iter: 3239  total_loss: 0.2591  loss_cls: 0.1027  loss_box_reg: 0.117  loss_contrastive: 0.01442  loss_rpn_cls: 0.01336  loss_rpn_loc: 0.008078  time: 0.9354  data_time: 0.2117  lr: 0.0004  max_mem: 7902M
+[03/20 22:03:13] d2.utils.events INFO:  eta: 0:31:50  iter: 3259  total_loss: 0.2697  loss_cls: 0.1105  loss_box_reg: 0.1162  loss_contrastive: 0.01429  loss_rpn_cls: 0.01343  loss_rpn_loc: 0.009394  time: 0.9358  data_time: 0.2100  lr: 0.0004  max_mem: 7902M
+[03/20 22:03:33] d2.utils.events INFO:  eta: 0:31:38  iter: 3279  total_loss: 0.258  loss_cls: 0.1081  loss_box_reg: 0.1121  loss_contrastive: 0.01426  loss_rpn_cls: 0.01713  loss_rpn_loc: 0.009826  time: 0.9362  data_time: 0.1970  lr: 0.0004  max_mem: 7902M
+[03/20 22:03:54] d2.utils.events INFO:  eta: 0:31:26  iter: 3299  total_loss: 0.2699  loss_cls: 0.1121  loss_box_reg: 0.1157  loss_contrastive: 0.01422  loss_rpn_cls: 0.01404  loss_rpn_loc: 0.009453  total_val_loss: 0.2873  val_loss_box_reg: 0.1213  val_loss_cls: 0.1136  val_loss_contrastive: 0.01411  val_loss_rpn_cls: 0.02819  val_loss_rpn_loc: 0.01021  time: 0.9366  data_time: 0.2103  lr: 0.0004  max_mem: 7902M
+[03/20 22:04:14] d2.utils.events INFO:  eta: 0:31:12  iter: 3319  total_loss: 0.2658  loss_cls: 0.1116  loss_box_reg: 0.1172  loss_contrastive: 0.01419  loss_rpn_cls: 0.01222  loss_rpn_loc: 0.008805  time: 0.9371  data_time: 0.2032  lr: 0.0004  max_mem: 7902M
+[03/20 22:04:23] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0003327.pth
+[03/20 22:04:37] d2.utils.events INFO:  eta: 0:30:56  iter: 3339  total_loss: 0.2828  loss_cls: 0.1142  loss_box_reg: 0.1247  loss_contrastive: 0.01425  loss_rpn_cls: 0.01346  loss_rpn_loc: 0.009207  time: 0.9377  data_time: 0.2597  lr: 0.0004  max_mem: 7902M
+[03/20 22:04:41] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:04:41] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:04:41] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:04:41] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:04:41] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:04:45] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0030 s/iter. Inference: 0.1512 s/iter. Eval: 0.0003 s/iter. Total: 0.1545 s/iter. ETA=0:00:31
+[03/20 22:04:50] d2.evaluation.evaluator INFO: Inference done 45/215. Dataloading: 0.0023 s/iter. Inference: 0.1481 s/iter. Eval: 0.0003 s/iter. Total: 0.1508 s/iter. ETA=0:00:25
+[03/20 22:04:55] d2.evaluation.evaluator INFO: Inference done 78/215. Dataloading: 0.0021 s/iter. Inference: 0.1489 s/iter. Eval: 0.0003 s/iter. Total: 0.1514 s/iter. ETA=0:00:20
+[03/20 22:05:00] d2.evaluation.evaluator INFO: Inference done 112/215. Dataloading: 0.0020 s/iter. Inference: 0.1482 s/iter. Eval: 0.0003 s/iter. Total: 0.1506 s/iter. ETA=0:00:15
+[03/20 22:05:05] d2.evaluation.evaluator INFO: Inference done 146/215. Dataloading: 0.0021 s/iter. Inference: 0.1484 s/iter. Eval: 0.0003 s/iter. Total: 0.1508 s/iter. ETA=0:00:10
+[03/20 22:05:10] d2.evaluation.evaluator INFO: Inference done 179/215. Dataloading: 0.0021 s/iter. Inference: 0.1487 s/iter. Eval: 0.0003 s/iter. Total: 0.1511 s/iter. ETA=0:00:05
+[03/20 22:05:15] d2.evaluation.evaluator INFO: Inference done 212/215. Dataloading: 0.0022 s/iter. Inference: 0.1489 s/iter. Eval: 0.0003 s/iter. Total: 0.1515 s/iter. ETA=0:00:00
+[03/20 22:05:16] d2.evaluation.evaluator INFO: Total inference time: 0:00:32.185468 (0.153264 s / iter per device, on 4 devices)
+[03/20 22:05:16] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:31 (0.149065 s / iter per device, on 4 devices)
+[03/20 22:05:17] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:05:17] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:05:17] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:05:18] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.888 | 24.500 | 2.759  | 0.000 | 5.125 | 11.041 |
+[03/20 22:05:18] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:05:18] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:05:18] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:05:18] d2.evaluation.testing INFO: copypaste: 7.8876,24.5004,2.7585,0.0000,5.1247,11.0406
+[03/20 22:05:34] d2.utils.events INFO:  eta: 0:30:42  iter: 3359  total_loss: 0.2615  loss_cls: 0.1082  loss_box_reg: 0.1175  loss_contrastive: 0.01425  loss_rpn_cls: 0.0145  loss_rpn_loc: 0.009112  time: 0.9382  data_time: 0.2084  lr: 0.0004  max_mem: 7902M
+[03/20 22:05:54] d2.utils.events INFO:  eta: 0:30:28  iter: 3379  total_loss: 0.2813  loss_cls: 0.1078  loss_box_reg: 0.1258  loss_contrastive: 0.01439  loss_rpn_cls: 0.01383  loss_rpn_loc: 0.009609  time: 0.9385  data_time: 0.2054  lr: 0.0004  max_mem: 7902M
+[03/20 22:06:15] d2.utils.events INFO:  eta: 0:30:11  iter: 3399  total_loss: 0.2645  loss_cls: 0.1024  loss_box_reg: 0.1178  loss_contrastive: 0.01423  loss_rpn_cls: 0.01658  loss_rpn_loc: 0.0104  total_val_loss: 0.256  val_loss_box_reg: 0.1029  val_loss_cls: 0.1039  val_loss_contrastive: 0.01422  val_loss_rpn_cls: 0.02525  val_loss_rpn_loc: 0.009625  time: 0.9388  data_time: 0.2081  lr: 0.0004  max_mem: 7902M
+[03/20 22:06:35] d2.utils.events INFO:  eta: 0:29:54  iter: 3419  total_loss: 0.2598  loss_cls: 0.106  loss_box_reg: 0.1116  loss_contrastive: 0.0143  loss_rpn_cls: 0.01269  loss_rpn_loc: 0.008394  time: 0.9392  data_time: 0.2096  lr: 0.0004  max_mem: 7902M
+[03/20 22:06:55] d2.utils.events INFO:  eta: 0:29:36  iter: 3439  total_loss: 0.2651  loss_cls: 0.1123  loss_box_reg: 0.1137  loss_contrastive: 0.01423  loss_rpn_cls: 0.01693  loss_rpn_loc: 0.01003  time: 0.9395  data_time: 0.2218  lr: 0.0004  max_mem: 7902M
+[03/20 22:07:15] d2.utils.events INFO:  eta: 0:29:18  iter: 3459  total_loss: 0.278  loss_cls: 0.1177  loss_box_reg: 0.1207  loss_contrastive: 0.01424  loss_rpn_cls: 0.01275  loss_rpn_loc: 0.009305  time: 0.9399  data_time: 0.2113  lr: 0.0004  max_mem: 7902M
+[03/20 22:07:35] d2.utils.events INFO:  eta: 0:29:02  iter: 3479  total_loss: 0.2767  loss_cls: 0.1089  loss_box_reg: 0.1206  loss_contrastive: 0.01431  loss_rpn_cls: 0.01318  loss_rpn_loc: 0.009458  time: 0.9402  data_time: 0.2099  lr: 0.0004  max_mem: 7902M
+[03/20 22:07:56] d2.utils.events INFO:  eta: 0:28:43  iter: 3499  total_loss: 0.2737  loss_cls: 0.1114  loss_box_reg: 0.1124  loss_contrastive: 0.01423  loss_rpn_cls: 0.01639  loss_rpn_loc: 0.01111  total_val_loss: 0.2144  val_loss_box_reg: 0.09278  val_loss_cls: 0.08914  val_loss_contrastive: 0.01441  val_loss_rpn_cls: 0.01246  val_loss_rpn_loc: 0.005634  time: 0.9404  data_time: 0.2043  lr: 0.0004  max_mem: 7902M
+[03/20 22:08:16] d2.utils.events INFO:  eta: 0:28:28  iter: 3519  total_loss: 0.2595  loss_cls: 0.1049  loss_box_reg: 0.1186  loss_contrastive: 0.0142  loss_rpn_cls: 0.01222  loss_rpn_loc: 0.009339  time: 0.9408  data_time: 0.2079  lr: 0.0004  max_mem: 7902M
+[03/20 22:08:33] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0003535.pth
+[03/20 22:08:37] d2.utils.events INFO:  eta: 0:28:13  iter: 3539  total_loss: 0.2939  loss_cls: 0.1138  loss_box_reg: 0.1274  loss_contrastive: 0.01427  loss_rpn_cls: 0.01197  loss_rpn_loc: 0.009895  time: 0.9411  data_time: 0.2200  lr: 0.0004  max_mem: 7902M
+[03/20 22:08:50] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:08:50] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:08:50] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:08:50] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:08:51] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:08:54] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0013 s/iter. Inference: 0.1479 s/iter. Eval: 0.0002 s/iter. Total: 0.1495 s/iter. ETA=0:00:30
+[03/20 22:08:59] d2.evaluation.evaluator INFO: Inference done 45/215. Dataloading: 0.0017 s/iter. Inference: 0.1477 s/iter. Eval: 0.0002 s/iter. Total: 0.1498 s/iter. ETA=0:00:25
+[03/20 22:09:04] d2.evaluation.evaluator INFO: Inference done 79/215. Dataloading: 0.0017 s/iter. Inference: 0.1467 s/iter. Eval: 0.0003 s/iter. Total: 0.1488 s/iter. ETA=0:00:20
+[03/20 22:09:09] d2.evaluation.evaluator INFO: Inference done 114/215. Dataloading: 0.0017 s/iter. Inference: 0.1459 s/iter. Eval: 0.0002 s/iter. Total: 0.1480 s/iter. ETA=0:00:14
+[03/20 22:09:15] d2.evaluation.evaluator INFO: Inference done 149/215. Dataloading: 0.0017 s/iter. Inference: 0.1456 s/iter. Eval: 0.0002 s/iter. Total: 0.1477 s/iter. ETA=0:00:09
+[03/20 22:09:20] d2.evaluation.evaluator INFO: Inference done 184/215. Dataloading: 0.0017 s/iter. Inference: 0.1452 s/iter. Eval: 0.0002 s/iter. Total: 0.1472 s/iter. ETA=0:00:04
+[03/20 22:09:25] d2.evaluation.evaluator INFO: Total inference time: 0:00:31.301348 (0.149054 s / iter per device, on 4 devices)
+[03/20 22:09:25] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:30 (0.145268 s / iter per device, on 4 devices)
+[03/20 22:09:25] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:09:25] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:09:25] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:09:26] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.519 | 23.289 | 2.694  | 0.000 | 4.828 | 10.594 |
+[03/20 22:09:26] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:09:26] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:09:26] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:09:26] d2.evaluation.testing INFO: copypaste: 7.5194,23.2889,2.6942,0.0000,4.8277,10.5936
+[03/20 22:09:33] d2.utils.events INFO:  eta: 0:27:54  iter: 3559  total_loss: 0.3025  loss_cls: 0.1188  loss_box_reg: 0.1324  loss_contrastive: 0.0142  loss_rpn_cls: 0.01653  loss_rpn_loc: 0.01106  time: 0.9414  data_time: 0.2114  lr: 0.0004  max_mem: 7902M
+[03/20 22:09:53] d2.utils.events INFO:  eta: 0:27:34  iter: 3579  total_loss: 0.2531  loss_cls: 0.1063  loss_box_reg: 0.1099  loss_contrastive: 0.01423  loss_rpn_cls: 0.01309  loss_rpn_loc: 0.008465  time: 0.9415  data_time: 0.1837  lr: 0.0004  max_mem: 7902M
+[03/20 22:10:12] d2.utils.events INFO:  eta: 0:27:14  iter: 3599  total_loss: 0.2743  loss_cls: 0.1159  loss_box_reg: 0.1198  loss_contrastive: 0.01425  loss_rpn_cls: 0.01297  loss_rpn_loc: 0.008623  total_val_loss: 0.2101  val_loss_box_reg: 0.07903  val_loss_cls: 0.0854  val_loss_contrastive: 0.01419  val_loss_rpn_cls: 0.02469  val_loss_rpn_loc: 0.006816  time: 0.9416  data_time: 0.1875  lr: 0.0004  max_mem: 7902M
+[03/20 22:10:32] d2.utils.events INFO:  eta: 0:26:50  iter: 3619  total_loss: 0.2806  loss_cls: 0.1207  loss_box_reg: 0.1202  loss_contrastive: 0.01421  loss_rpn_cls: 0.01331  loss_rpn_loc: 0.009967  time: 0.9417  data_time: 0.1833  lr: 0.0004  max_mem: 7902M
+[03/20 22:10:52] d2.utils.events INFO:  eta: 0:26:27  iter: 3639  total_loss: 0.2434  loss_cls: 0.1041  loss_box_reg: 0.1059  loss_contrastive: 0.01422  loss_rpn_cls: 0.01196  loss_rpn_loc: 0.008893  time: 0.9418  data_time: 0.2020  lr: 0.0004  max_mem: 7902M
+[03/20 22:11:11] d2.utils.events INFO:  eta: 0:26:04  iter: 3659  total_loss: 0.2736  loss_cls: 0.111  loss_box_reg: 0.1197  loss_contrastive: 0.01436  loss_rpn_cls: 0.01491  loss_rpn_loc: 0.01164  time: 0.9420  data_time: 0.1945  lr: 0.0004  max_mem: 7902M
+[03/20 22:11:30] d2.utils.events INFO:  eta: 0:25:43  iter: 3679  total_loss: 0.2465  loss_cls: 0.1023  loss_box_reg: 0.1056  loss_contrastive: 0.01423  loss_rpn_cls: 0.01316  loss_rpn_loc: 0.00828  time: 0.9420  data_time: 0.1870  lr: 0.0004  max_mem: 7902M
+[03/20 22:11:49] d2.utils.events INFO:  eta: 0:25:22  iter: 3699  total_loss: 0.2735  loss_cls: 0.1113  loss_box_reg: 0.1215  loss_contrastive: 0.01432  loss_rpn_cls: 0.01206  loss_rpn_loc: 0.008398  total_val_loss: 0.2679  val_loss_box_reg: 0.09511  val_loss_cls: 0.1165  val_loss_contrastive: 0.01422  val_loss_rpn_cls: 0.0314  val_loss_rpn_loc: 0.01065  time: 0.9420  data_time: 0.1867  lr: 0.0004  max_mem: 7902M
+[03/20 22:12:09] d2.utils.events INFO:  eta: 0:25:00  iter: 3719  total_loss: 0.2557  loss_cls: 0.1049  loss_box_reg: 0.1173  loss_contrastive: 0.01438  loss_rpn_cls: 0.01416  loss_rpn_loc: 0.008733  time: 0.9421  data_time: 0.1886  lr: 0.0004  max_mem: 7902M
+[03/20 22:12:29] d2.utils.events INFO:  eta: 0:24:38  iter: 3739  total_loss: 0.2653  loss_cls: 0.1105  loss_box_reg: 0.1159  loss_contrastive: 0.01432  loss_rpn_cls: 0.0137  loss_rpn_loc: 0.009028  time: 0.9423  data_time: 0.2082  lr: 0.0004  max_mem: 7902M
+[03/20 22:12:33] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0003743.pth
+[03/20 22:12:49] d2.utils.events INFO:  eta: 0:24:17  iter: 3759  total_loss: 0.293  loss_cls: 0.1157  loss_box_reg: 0.1274  loss_contrastive: 0.01412  loss_rpn_cls: 0.01509  loss_rpn_loc: 0.01007  time: 0.9424  data_time: 0.2119  lr: 0.0004  max_mem: 7902M
+[03/20 22:12:51] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:12:51] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:12:51] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:12:51] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:12:51] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:12:54] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0016 s/iter. Inference: 0.1457 s/iter. Eval: 0.0002 s/iter. Total: 0.1475 s/iter. ETA=0:00:30
+[03/20 22:13:00] d2.evaluation.evaluator INFO: Inference done 46/215. Dataloading: 0.0016 s/iter. Inference: 0.1445 s/iter. Eval: 0.0004 s/iter. Total: 0.1464 s/iter. ETA=0:00:24
+[03/20 22:13:05] d2.evaluation.evaluator INFO: Inference done 81/215. Dataloading: 0.0016 s/iter. Inference: 0.1439 s/iter. Eval: 0.0003 s/iter. Total: 0.1458 s/iter. ETA=0:00:19
+[03/20 22:13:10] d2.evaluation.evaluator INFO: Inference done 115/215. Dataloading: 0.0015 s/iter. Inference: 0.1444 s/iter. Eval: 0.0003 s/iter. Total: 0.1463 s/iter. ETA=0:00:14
+[03/20 22:13:15] d2.evaluation.evaluator INFO: Inference done 150/215. Dataloading: 0.0016 s/iter. Inference: 0.1443 s/iter. Eval: 0.0003 s/iter. Total: 0.1462 s/iter. ETA=0:00:09
+[03/20 22:13:20] d2.evaluation.evaluator INFO: Inference done 185/215. Dataloading: 0.0016 s/iter. Inference: 0.1444 s/iter. Eval: 0.0003 s/iter. Total: 0.1463 s/iter. ETA=0:00:04
+[03/20 22:13:25] d2.evaluation.evaluator INFO: Total inference time: 0:00:31.077314 (0.147987 s / iter per device, on 4 devices)
+[03/20 22:13:25] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:30 (0.144173 s / iter per device, on 4 devices)
+[03/20 22:13:25] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:13:25] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:13:25] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:13:26] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 8.250 | 24.944 | 2.917  | 0.000 | 5.291 | 11.664 |
+[03/20 22:13:26] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:13:26] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:13:26] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:13:26] d2.evaluation.testing INFO: copypaste: 8.2496,24.9440,2.9171,0.0000,5.2911,11.6637
+[03/20 22:13:43] d2.utils.events INFO:  eta: 0:23:56  iter: 3779  total_loss: 0.2799  loss_cls: 0.1147  loss_box_reg: 0.1223  loss_contrastive: 0.01416  loss_rpn_cls: 0.01581  loss_rpn_loc: 0.009453  time: 0.9425  data_time: 0.1887  lr: 0.0004  max_mem: 7902M
+[03/20 22:14:03] d2.utils.events INFO:  eta: 0:23:34  iter: 3799  total_loss: 0.2725  loss_cls: 0.1072  loss_box_reg: 0.1255  loss_contrastive: 0.01419  loss_rpn_cls: 0.01247  loss_rpn_loc: 0.0096  total_val_loss: 0.3203  val_loss_box_reg: 0.1307  val_loss_cls: 0.1393  val_loss_contrastive: 0.01426  val_loss_rpn_cls: 0.02309  val_loss_rpn_loc: 0.01299  time: 0.9425  data_time: 0.1852  lr: 0.0004  max_mem: 7902M
+[03/20 22:14:22] d2.utils.events INFO:  eta: 0:23:15  iter: 3819  total_loss: 0.2537  loss_cls: 0.1032  loss_box_reg: 0.1115  loss_contrastive: 0.01429  loss_rpn_cls: 0.01116  loss_rpn_loc: 0.009293  time: 0.9427  data_time: 0.1845  lr: 0.0004  max_mem: 7902M
+[03/20 22:14:42] d2.utils.events INFO:  eta: 0:22:53  iter: 3839  total_loss: 0.2544  loss_cls: 0.1031  loss_box_reg: 0.111  loss_contrastive: 0.01416  loss_rpn_cls: 0.01339  loss_rpn_loc: 0.00804  time: 0.9427  data_time: 0.1961  lr: 0.0004  max_mem: 7902M
+[03/20 22:15:01] d2.utils.events INFO:  eta: 0:22:33  iter: 3859  total_loss: 0.2579  loss_cls: 0.1062  loss_box_reg: 0.1126  loss_contrastive: 0.01421  loss_rpn_cls: 0.01246  loss_rpn_loc: 0.00802  time: 0.9428  data_time: 0.1872  lr: 0.0004  max_mem: 7902M
+[03/20 22:15:20] d2.utils.events INFO:  eta: 0:22:12  iter: 3879  total_loss: 0.2814  loss_cls: 0.1123  loss_box_reg: 0.1284  loss_contrastive: 0.01433  loss_rpn_cls: 0.01148  loss_rpn_loc: 0.009651  time: 0.9428  data_time: 0.1808  lr: 0.0004  max_mem: 7902M
+[03/20 22:15:40] d2.utils.events INFO:  eta: 0:21:50  iter: 3899  total_loss: 0.2808  loss_cls: 0.1124  loss_box_reg: 0.1271  loss_contrastive: 0.01427  loss_rpn_cls: 0.01371  loss_rpn_loc: 0.008553  total_val_loss: 0.2358  val_loss_box_reg: 0.09695  val_loss_cls: 0.09892  val_loss_contrastive: 0.01435  val_loss_rpn_cls: 0.01723  val_loss_rpn_loc: 0.008386  time: 0.9428  data_time: 0.1888  lr: 0.0004  max_mem: 7902M
+[03/20 22:15:59] d2.utils.events INFO:  eta: 0:21:28  iter: 3919  total_loss: 0.2707  loss_cls: 0.1094  loss_box_reg: 0.1139  loss_contrastive: 0.01429  loss_rpn_cls: 0.01133  loss_rpn_loc: 0.008529  time: 0.9429  data_time: 0.1901  lr: 0.0004  max_mem: 7902M
+[03/20 22:16:19] d2.utils.events INFO:  eta: 0:21:06  iter: 3939  total_loss: 0.2961  loss_cls: 0.1243  loss_box_reg: 0.134  loss_contrastive: 0.01421  loss_rpn_cls: 0.01692  loss_rpn_loc: 0.01096  time: 0.9429  data_time: 0.1990  lr: 0.0004  max_mem: 7902M
+[03/20 22:16:30] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0003951.pth
+[03/20 22:16:38] d2.utils.events INFO:  eta: 0:20:42  iter: 3959  total_loss: 0.2656  loss_cls: 0.109  loss_box_reg: 0.1186  loss_contrastive: 0.01411  loss_rpn_cls: 0.0162  loss_rpn_loc: 0.01049  time: 0.9429  data_time: 0.1835  lr: 0.0004  max_mem: 7902M
+[03/20 22:16:49] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:16:49] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:16:49] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:16:49] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:16:49] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:16:52] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0015 s/iter. Inference: 0.1481 s/iter. Eval: 0.0003 s/iter. Total: 0.1499 s/iter. ETA=0:00:30
+[03/20 22:16:57] d2.evaluation.evaluator INFO: Inference done 46/215. Dataloading: 0.0016 s/iter. Inference: 0.1436 s/iter. Eval: 0.0002 s/iter. Total: 0.1455 s/iter. ETA=0:00:24
+[03/20 22:17:02] d2.evaluation.evaluator INFO: Inference done 81/215. Dataloading: 0.0017 s/iter. Inference: 0.1434 s/iter. Eval: 0.0002 s/iter. Total: 0.1454 s/iter. ETA=0:00:19
+[03/20 22:17:07] d2.evaluation.evaluator INFO: Inference done 116/215. Dataloading: 0.0016 s/iter. Inference: 0.1436 s/iter. Eval: 0.0002 s/iter. Total: 0.1455 s/iter. ETA=0:00:14
+[03/20 22:17:12] d2.evaluation.evaluator INFO: Inference done 150/215. Dataloading: 0.0016 s/iter. Inference: 0.1442 s/iter. Eval: 0.0002 s/iter. Total: 0.1462 s/iter. ETA=0:00:09
+[03/20 22:17:18] d2.evaluation.evaluator INFO: Inference done 185/215. Dataloading: 0.0016 s/iter. Inference: 0.1442 s/iter. Eval: 0.0002 s/iter. Total: 0.1461 s/iter. ETA=0:00:04
+[03/20 22:17:22] d2.evaluation.evaluator INFO: Total inference time: 0:00:31.049537 (0.147855 s / iter per device, on 4 devices)
+[03/20 22:17:22] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:30 (0.144293 s / iter per device, on 4 devices)
+[03/20 22:17:23] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:17:23] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:17:23] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:17:24] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.738 | 25.002 | 2.571  | 0.000 | 4.897 | 10.993 |
+[03/20 22:17:24] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:17:24] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:17:24] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:17:24] d2.evaluation.testing INFO: copypaste: 7.7379,25.0019,2.5712,0.0000,4.8971,10.9927
+[03/20 22:17:32] d2.utils.events INFO:  eta: 0:20:21  iter: 3979  total_loss: 0.2556  loss_cls: 0.1049  loss_box_reg: 0.1113  loss_contrastive: 0.01411  loss_rpn_cls: 0.01448  loss_rpn_loc: 0.009003  time: 0.9430  data_time: 0.2044  lr: 0.0004  max_mem: 7902M
+[03/20 22:17:52] d2.utils.events INFO:  eta: 0:19:59  iter: 3999  total_loss: 0.286  loss_cls: 0.1122  loss_box_reg: 0.1337  loss_contrastive: 0.01413  loss_rpn_cls: 0.0123  loss_rpn_loc: 0.008817  total_val_loss: 0.2614  val_loss_box_reg: 0.07781  val_loss_cls: 0.08925  val_loss_contrastive: 0.01303  val_loss_rpn_cls: 0.0681  val_loss_rpn_loc: 0.01323  time: 0.9430  data_time: 0.1876  lr: 0.0004  max_mem: 7902M
+[03/20 22:18:11] d2.utils.events INFO:  eta: 0:19:38  iter: 4019  total_loss: 0.2675  loss_cls: 0.1105  loss_box_reg: 0.1173  loss_contrastive: 0.01424  loss_rpn_cls: 0.01427  loss_rpn_loc: 0.009792  time: 0.9431  data_time: 0.1897  lr: 0.0004  max_mem: 7902M
+[03/20 22:18:31] d2.utils.events INFO:  eta: 0:19:16  iter: 4039  total_loss: 0.2627  loss_cls: 0.1067  loss_box_reg: 0.115  loss_contrastive: 0.01428  loss_rpn_cls: 0.01324  loss_rpn_loc: 0.008633  time: 0.9432  data_time: 0.2010  lr: 0.0004  max_mem: 7902M
+[03/20 22:18:50] d2.utils.events INFO:  eta: 0:18:56  iter: 4059  total_loss: 0.2867  loss_cls: 0.1121  loss_box_reg: 0.1244  loss_contrastive: 0.01436  loss_rpn_cls: 0.01469  loss_rpn_loc: 0.009822  time: 0.9433  data_time: 0.1815  lr: 0.0004  max_mem: 7902M
+[03/20 22:19:09] d2.utils.events INFO:  eta: 0:18:35  iter: 4079  total_loss: 0.2677  loss_cls: 0.1147  loss_box_reg: 0.12  loss_contrastive: 0.01413  loss_rpn_cls: 0.015  loss_rpn_loc: 0.009263  time: 0.9433  data_time: 0.1850  lr: 0.0004  max_mem: 7902M
+[03/20 22:19:29] d2.utils.events INFO:  eta: 0:18:14  iter: 4099  total_loss: 0.2467  loss_cls: 0.09892  loss_box_reg: 0.1137  loss_contrastive: 0.01423  loss_rpn_cls: 0.01252  loss_rpn_loc: 0.008243  total_val_loss: 0.2931  val_loss_box_reg: 0.1211  val_loss_cls: 0.1141  val_loss_contrastive: 0.01431  val_loss_rpn_cls: 0.03458  val_loss_rpn_loc: 0.008999  time: 0.9433  data_time: 0.1874  lr: 0.0004  max_mem: 7902M
+[03/20 22:19:48] d2.utils.events INFO:  eta: 0:17:53  iter: 4119  total_loss: 0.2908  loss_cls: 0.117  loss_box_reg: 0.119  loss_contrastive: 0.01441  loss_rpn_cls: 0.01649  loss_rpn_loc: 0.009197  time: 0.9434  data_time: 0.1855  lr: 0.0004  max_mem: 7902M
+[03/20 22:20:08] d2.utils.events INFO:  eta: 0:17:32  iter: 4139  total_loss: 0.2462  loss_cls: 0.09759  loss_box_reg: 0.106  loss_contrastive: 0.01414  loss_rpn_cls: 0.01388  loss_rpn_loc: 0.008808  time: 0.9435  data_time: 0.1994  lr: 0.0004  max_mem: 7902M
+[03/20 22:20:27] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0004159.pth
+[03/20 22:20:28] d2.utils.events INFO:  eta: 0:17:11  iter: 4159  total_loss: 0.2688  loss_cls: 0.108  loss_box_reg: 0.1253  loss_contrastive: 0.01423  loss_rpn_cls: 0.01432  loss_rpn_loc: 0.009693  time: 0.9435  data_time: 0.1923  lr: 0.0004  max_mem: 7902M
+[03/20 22:20:48] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:20:48] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:20:48] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:20:48] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:20:48] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:20:51] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0017 s/iter. Inference: 0.1465 s/iter. Eval: 0.0002 s/iter. Total: 0.1484 s/iter. ETA=0:00:30
+[03/20 22:20:56] d2.evaluation.evaluator INFO: Inference done 45/215. Dataloading: 0.0017 s/iter. Inference: 0.1454 s/iter. Eval: 0.0002 s/iter. Total: 0.1474 s/iter. ETA=0:00:25
+[03/20 22:21:01] d2.evaluation.evaluator INFO: Inference done 80/215. Dataloading: 0.0019 s/iter. Inference: 0.1445 s/iter. Eval: 0.0002 s/iter. Total: 0.1467 s/iter. ETA=0:00:19
+[03/20 22:21:06] d2.evaluation.evaluator INFO: Inference done 114/215. Dataloading: 0.0019 s/iter. Inference: 0.1449 s/iter. Eval: 0.0002 s/iter. Total: 0.1471 s/iter. ETA=0:00:14
+[03/20 22:21:11] d2.evaluation.evaluator INFO: Inference done 148/215. Dataloading: 0.0018 s/iter. Inference: 0.1451 s/iter. Eval: 0.0002 s/iter. Total: 0.1472 s/iter. ETA=0:00:09
+[03/20 22:21:16] d2.evaluation.evaluator INFO: Inference done 182/215. Dataloading: 0.0018 s/iter. Inference: 0.1453 s/iter. Eval: 0.0002 s/iter. Total: 0.1473 s/iter. ETA=0:00:04
+[03/20 22:21:21] d2.evaluation.evaluator INFO: Total inference time: 0:00:31.147454 (0.148321 s / iter per device, on 4 devices)
+[03/20 22:21:21] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:30 (0.145208 s / iter per device, on 4 devices)
+[03/20 22:21:22] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:21:22] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:21:22] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:21:23] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.752 | 24.284 | 2.796  | 0.000 | 4.968 | 10.927 |
+[03/20 22:21:23] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:21:23] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:21:23] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:21:23] d2.evaluation.testing INFO: copypaste: 7.7517,24.2844,2.7963,0.0000,4.9680,10.9272
+[03/20 22:21:23] d2.utils.events INFO:  eta: 0:16:50  iter: 4179  total_loss: 0.2986  loss_cls: 0.1237  loss_box_reg: 0.1316  loss_contrastive: 0.01411  loss_rpn_cls: 0.01536  loss_rpn_loc: 0.01204  time: 0.9437  data_time: 0.2467  lr: 0.0004  max_mem: 7902M
+[03/20 22:21:42] d2.utils.events INFO:  eta: 0:16:29  iter: 4199  total_loss: 0.2898  loss_cls: 0.118  loss_box_reg: 0.1217  loss_contrastive: 0.01403  loss_rpn_cls: 0.0143  loss_rpn_loc: 0.008857  total_val_loss: 0.2232  val_loss_box_reg: 0.07649  val_loss_cls: 0.1043  val_loss_contrastive: 0.01311  val_loss_rpn_cls: 0.02237  val_loss_rpn_loc: 0.006914  time: 0.9437  data_time: 0.1934  lr: 0.0004  max_mem: 7902M
+[03/20 22:22:01] d2.utils.events INFO:  eta: 0:16:09  iter: 4219  total_loss: 0.2823  loss_cls: 0.1133  loss_box_reg: 0.1209  loss_contrastive: 0.0141  loss_rpn_cls: 0.01376  loss_rpn_loc: 0.009208  time: 0.9438  data_time: 0.1848  lr: 0.0004  max_mem: 7902M
+[03/20 22:22:21] d2.utils.events INFO:  eta: 0:15:49  iter: 4239  total_loss: 0.2759  loss_cls: 0.1146  loss_box_reg: 0.1238  loss_contrastive: 0.01415  loss_rpn_cls: 0.01512  loss_rpn_loc: 0.009824  time: 0.9439  data_time: 0.2022  lr: 0.0004  max_mem: 7902M
+[03/20 22:22:40] d2.utils.events INFO:  eta: 0:15:28  iter: 4259  total_loss: 0.2487  loss_cls: 0.1022  loss_box_reg: 0.1106  loss_contrastive: 0.01411  loss_rpn_cls: 0.01538  loss_rpn_loc: 0.008215  time: 0.9439  data_time: 0.1825  lr: 0.0004  max_mem: 7902M
+[03/20 22:22:59] d2.utils.events INFO:  eta: 0:15:08  iter: 4279  total_loss: 0.2703  loss_cls: 0.1098  loss_box_reg: 0.1159  loss_contrastive: 0.01418  loss_rpn_cls: 0.01279  loss_rpn_loc: 0.009244  time: 0.9439  data_time: 0.1900  lr: 0.0004  max_mem: 7902M
+[03/20 22:23:19] d2.utils.events INFO:  eta: 0:14:47  iter: 4299  total_loss: 0.27  loss_cls: 0.1079  loss_box_reg: 0.1206  loss_contrastive: 0.01422  loss_rpn_cls: 0.01472  loss_rpn_loc: 0.008933  total_val_loss: 0.2536  val_loss_box_reg: 0.1145  val_loss_cls: 0.1021  val_loss_contrastive: 0.01435  val_loss_rpn_cls: 0.01489  val_loss_rpn_loc: 0.007723  time: 0.9439  data_time: 0.1854  lr: 0.0004  max_mem: 7902M
+[03/20 22:23:38] d2.utils.events INFO:  eta: 0:14:27  iter: 4319  total_loss: 0.269  loss_cls: 0.1142  loss_box_reg: 0.1152  loss_contrastive: 0.01411  loss_rpn_cls: 0.01344  loss_rpn_loc: 0.008518  time: 0.9439  data_time: 0.1921  lr: 0.0004  max_mem: 7902M
+[03/20 22:23:58] d2.utils.events INFO:  eta: 0:14:07  iter: 4339  total_loss: 0.248  loss_cls: 0.1033  loss_box_reg: 0.1094  loss_contrastive: 0.01408  loss_rpn_cls: 0.01309  loss_rpn_loc: 0.008131  time: 0.9440  data_time: 0.1988  lr: 0.0004  max_mem: 7902M
+[03/20 22:24:17] d2.utils.events INFO:  eta: 0:13:46  iter: 4359  total_loss: 0.2689  loss_cls: 0.1091  loss_box_reg: 0.1201  loss_contrastive: 0.01417  loss_rpn_cls: 0.01211  loss_rpn_loc: 0.01001  time: 0.9440  data_time: 0.1810  lr: 0.0004  max_mem: 7902M
+[03/20 22:24:24] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0004367.pth
+[03/20 22:24:37] d2.utils.events INFO:  eta: 0:13:26  iter: 4379  total_loss: 0.2697  loss_cls: 0.106  loss_box_reg: 0.121  loss_contrastive: 0.01414  loss_rpn_cls: 0.0134  loss_rpn_loc: 0.009852  time: 0.9441  data_time: 0.2164  lr: 0.0004  max_mem: 7902M
+[03/20 22:24:45] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:24:45] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:24:45] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:24:45] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:24:45] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:24:49] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0019 s/iter. Inference: 0.1437 s/iter. Eval: 0.0002 s/iter. Total: 0.1458 s/iter. ETA=0:00:29
+[03/20 22:24:54] d2.evaluation.evaluator INFO: Inference done 46/215. Dataloading: 0.0015 s/iter. Inference: 0.1426 s/iter. Eval: 0.0002 s/iter. Total: 0.1444 s/iter. ETA=0:00:24
+[03/20 22:24:59] d2.evaluation.evaluator INFO: Inference done 81/215. Dataloading: 0.0016 s/iter. Inference: 0.1428 s/iter. Eval: 0.0002 s/iter. Total: 0.1446 s/iter. ETA=0:00:19
+[03/20 22:25:04] d2.evaluation.evaluator INFO: Inference done 116/215. Dataloading: 0.0016 s/iter. Inference: 0.1430 s/iter. Eval: 0.0002 s/iter. Total: 0.1449 s/iter. ETA=0:00:14
+[03/20 22:25:09] d2.evaluation.evaluator INFO: Inference done 151/215. Dataloading: 0.0015 s/iter. Inference: 0.1434 s/iter. Eval: 0.0002 s/iter. Total: 0.1452 s/iter. ETA=0:00:09
+[03/20 22:25:14] d2.evaluation.evaluator INFO: Inference done 186/215. Dataloading: 0.0015 s/iter. Inference: 0.1437 s/iter. Eval: 0.0002 s/iter. Total: 0.1455 s/iter. ETA=0:00:04
+[03/20 22:25:19] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.760357 (0.146478 s / iter per device, on 4 devices)
+[03/20 22:25:19] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:30 (0.143446 s / iter per device, on 4 devices)
+[03/20 22:25:19] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:25:19] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:25:19] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:25:20] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.578 | 24.734 | 2.650  | 0.000 | 4.904 | 10.697 |
+[03/20 22:25:20] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:25:20] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:25:20] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:25:20] d2.evaluation.testing INFO: copypaste: 7.5779,24.7342,2.6496,0.0000,4.9043,10.6966
+[03/20 22:25:31] d2.utils.events INFO:  eta: 0:13:06  iter: 4399  total_loss: 0.2571  loss_cls: 0.1059  loss_box_reg: 0.113  loss_contrastive: 0.0142  loss_rpn_cls: 0.01291  loss_rpn_loc: 0.00795  total_val_loss: 0.2283  val_loss_box_reg: 0.08095  val_loss_cls: 0.1123  val_loss_contrastive: 0.01439  val_loss_rpn_cls: 0.01355  val_loss_rpn_loc: 0.007068  time: 0.9440  data_time: 0.1845  lr: 4e-05  max_mem: 7902M
+[03/20 22:25:50] d2.utils.events INFO:  eta: 0:12:46  iter: 4419  total_loss: 0.2847  loss_cls: 0.1136  loss_box_reg: 0.1291  loss_contrastive: 0.01416  loss_rpn_cls: 0.01294  loss_rpn_loc: 0.009992  time: 0.9440  data_time: 0.1837  lr: 4e-05  max_mem: 7902M
+[03/20 22:26:10] d2.utils.events INFO:  eta: 0:12:25  iter: 4439  total_loss: 0.2588  loss_cls: 0.1064  loss_box_reg: 0.1171  loss_contrastive: 0.01415  loss_rpn_cls: 0.0138  loss_rpn_loc: 0.009716  time: 0.9440  data_time: 0.1955  lr: 4e-05  max_mem: 7902M
+[03/20 22:26:28] d2.utils.events INFO:  eta: 0:12:06  iter: 4459  total_loss: 0.2708  loss_cls: 0.1121  loss_box_reg: 0.1213  loss_contrastive: 0.01413  loss_rpn_cls: 0.01343  loss_rpn_loc: 0.008936  time: 0.9440  data_time: 0.1834  lr: 4e-05  max_mem: 7902M
+[03/20 22:26:47] d2.utils.events INFO:  eta: 0:11:46  iter: 4479  total_loss: 0.266  loss_cls: 0.1069  loss_box_reg: 0.1108  loss_contrastive: 0.01418  loss_rpn_cls: 0.01176  loss_rpn_loc: 0.008928  time: 0.9440  data_time: 0.1807  lr: 4e-05  max_mem: 7902M
+[03/20 22:27:07] d2.utils.events INFO:  eta: 0:11:26  iter: 4499  total_loss: 0.263  loss_cls: 0.1111  loss_box_reg: 0.1188  loss_contrastive: 0.01423  loss_rpn_cls: 0.01712  loss_rpn_loc: 0.01103  total_val_loss: 0.2365  val_loss_box_reg: 0.08343  val_loss_cls: 0.09676  val_loss_contrastive: 0.01422  val_loss_rpn_cls: 0.03549  val_loss_rpn_loc: 0.006603  time: 0.9440  data_time: 0.1767  lr: 4e-05  max_mem: 7902M
+[03/20 22:27:26] d2.utils.events INFO:  eta: 0:11:06  iter: 4519  total_loss: 0.276  loss_cls: 0.1085  loss_box_reg: 0.1264  loss_contrastive: 0.01424  loss_rpn_cls: 0.01397  loss_rpn_loc: 0.008211  time: 0.9440  data_time: 0.1805  lr: 4e-05  max_mem: 7902M
+[03/20 22:27:45] d2.utils.events INFO:  eta: 0:10:45  iter: 4539  total_loss: 0.2941  loss_cls: 0.1157  loss_box_reg: 0.1373  loss_contrastive: 0.01423  loss_rpn_cls: 0.01393  loss_rpn_loc: 0.01  time: 0.9440  data_time: 0.1977  lr: 4e-05  max_mem: 7902M
+[03/20 22:28:04] d2.utils.events INFO:  eta: 0:10:25  iter: 4559  total_loss: 0.2687  loss_cls: 0.1083  loss_box_reg: 0.1262  loss_contrastive: 0.01424  loss_rpn_cls: 0.01296  loss_rpn_loc: 0.009631  time: 0.9440  data_time: 0.1758  lr: 4e-05  max_mem: 7902M
+[03/20 22:28:19] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0004575.pth
+[03/20 22:28:24] d2.utils.events INFO:  eta: 0:10:05  iter: 4579  total_loss: 0.2801  loss_cls: 0.1155  loss_box_reg: 0.1268  loss_contrastive: 0.01418  loss_rpn_cls: 0.01221  loss_rpn_loc: 0.009624  time: 0.9440  data_time: 0.1800  lr: 4e-05  max_mem: 7902M
+[03/20 22:28:41] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:28:41] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:28:41] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:28:41] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:28:41] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:28:44] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0015 s/iter. Inference: 0.1582 s/iter. Eval: 0.0002 s/iter. Total: 0.1599 s/iter. ETA=0:00:32
+[03/20 22:28:49] d2.evaluation.evaluator INFO: Inference done 47/215. Dataloading: 0.0014 s/iter. Inference: 0.1434 s/iter. Eval: 0.0002 s/iter. Total: 0.1451 s/iter. ETA=0:00:24
+[03/20 22:28:54] d2.evaluation.evaluator INFO: Inference done 82/215. Dataloading: 0.0015 s/iter. Inference: 0.1430 s/iter. Eval: 0.0002 s/iter. Total: 0.1448 s/iter. ETA=0:00:19
+[03/20 22:28:59] d2.evaluation.evaluator INFO: Inference done 116/215. Dataloading: 0.0015 s/iter. Inference: 0.1440 s/iter. Eval: 0.0002 s/iter. Total: 0.1458 s/iter. ETA=0:00:14
+[03/20 22:29:04] d2.evaluation.evaluator INFO: Inference done 151/215. Dataloading: 0.0015 s/iter. Inference: 0.1433 s/iter. Eval: 0.0002 s/iter. Total: 0.1451 s/iter. ETA=0:00:09
+[03/20 22:29:09] d2.evaluation.evaluator INFO: Inference done 185/215. Dataloading: 0.0016 s/iter. Inference: 0.1440 s/iter. Eval: 0.0002 s/iter. Total: 0.1459 s/iter. ETA=0:00:04
+[03/20 22:29:14] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.756423 (0.146459 s / iter per device, on 4 devices)
+[03/20 22:29:14] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:30 (0.143590 s / iter per device, on 4 devices)
+[03/20 22:29:14] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:29:14] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:29:14] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:29:15] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.874 | 25.436 | 2.737  | 0.000 | 5.010 | 11.109 |
+[03/20 22:29:15] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:29:15] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:29:15] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:29:15] d2.evaluation.testing INFO: copypaste: 7.8739,25.4361,2.7369,0.0000,5.0101,11.1093
+[03/20 22:29:18] d2.utils.events INFO:  eta: 0:09:46  iter: 4599  total_loss: 0.2421  loss_cls: 0.09864  loss_box_reg: 0.113  loss_contrastive: 0.01418  loss_rpn_cls: 0.01192  loss_rpn_loc: 0.008889  total_val_loss: 0.2065  val_loss_box_reg: 0.08447  val_loss_cls: 0.08622  val_loss_contrastive: 0.0141  val_loss_rpn_cls: 0.01445  val_loss_rpn_loc: 0.007286  time: 0.9440  data_time: 0.1798  lr: 4e-05  max_mem: 7902M
+[03/20 22:29:37] d2.utils.events INFO:  eta: 0:09:27  iter: 4619  total_loss: 0.2767  loss_cls: 0.1096  loss_box_reg: 0.1256  loss_contrastive: 0.01422  loss_rpn_cls: 0.01192  loss_rpn_loc: 0.009313  time: 0.9440  data_time: 0.1764  lr: 4e-05  max_mem: 7902M
+[03/20 22:29:57] d2.utils.events INFO:  eta: 0:09:08  iter: 4639  total_loss: 0.2914  loss_cls: 0.1203  loss_box_reg: 0.1313  loss_contrastive: 0.01408  loss_rpn_cls: 0.01536  loss_rpn_loc: 0.009565  time: 0.9441  data_time: 0.2002  lr: 4e-05  max_mem: 7902M
+[03/20 22:30:16] d2.utils.events INFO:  eta: 0:08:49  iter: 4659  total_loss: 0.2702  loss_cls: 0.1079  loss_box_reg: 0.1214  loss_contrastive: 0.01419  loss_rpn_cls: 0.01536  loss_rpn_loc: 0.009666  time: 0.9440  data_time: 0.1900  lr: 4e-05  max_mem: 7902M
+[03/20 22:30:34] d2.utils.events INFO:  eta: 0:08:28  iter: 4679  total_loss: 0.262  loss_cls: 0.112  loss_box_reg: 0.1123  loss_contrastive: 0.01417  loss_rpn_cls: 0.01221  loss_rpn_loc: 0.009112  time: 0.9440  data_time: 0.1789  lr: 4e-05  max_mem: 7902M
+[03/20 22:30:54] d2.utils.events INFO:  eta: 0:08:09  iter: 4699  total_loss: 0.2485  loss_cls: 0.1039  loss_box_reg: 0.1097  loss_contrastive: 0.01421  loss_rpn_cls: 0.01646  loss_rpn_loc: 0.008221  total_val_loss: 0.2315  val_loss_box_reg: 0.08889  val_loss_cls: 0.1033  val_loss_contrastive: 0.01402  val_loss_rpn_cls: 0.01761  val_loss_rpn_loc: 0.00762  time: 0.9439  data_time: 0.1795  lr: 4e-05  max_mem: 7902M
+[03/20 22:31:13] d2.utils.events INFO:  eta: 0:07:51  iter: 4719  total_loss: 0.2693  loss_cls: 0.1061  loss_box_reg: 0.1199  loss_contrastive: 0.01416  loss_rpn_cls: 0.01126  loss_rpn_loc: 0.00809  time: 0.9439  data_time: 0.1843  lr: 4e-05  max_mem: 7902M
+[03/20 22:31:32] d2.utils.events INFO:  eta: 0:07:32  iter: 4739  total_loss: 0.2699  loss_cls: 0.1103  loss_box_reg: 0.1164  loss_contrastive: 0.0142  loss_rpn_cls: 0.01401  loss_rpn_loc: 0.009776  time: 0.9439  data_time: 0.1911  lr: 4e-05  max_mem: 7902M
+[03/20 22:31:51] d2.utils.events INFO:  eta: 0:07:13  iter: 4759  total_loss: 0.286  loss_cls: 0.1142  loss_box_reg: 0.1242  loss_contrastive: 0.01418  loss_rpn_cls: 0.01467  loss_rpn_loc: 0.009056  time: 0.9439  data_time: 0.1833  lr: 4e-05  max_mem: 7902M
+[03/20 22:32:09] d2.utils.events INFO:  eta: 0:06:53  iter: 4779  total_loss: 0.2732  loss_cls: 0.1033  loss_box_reg: 0.1127  loss_contrastive: 0.01424  loss_rpn_cls: 0.0142  loss_rpn_loc: 0.009544  time: 0.9438  data_time: 0.1851  lr: 4e-05  max_mem: 7902M
+[03/20 22:32:13] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0004783.pth
+[03/20 22:32:30] d2.utils.events INFO:  eta: 0:06:34  iter: 4799  total_loss: 0.2722  loss_cls: 0.116  loss_box_reg: 0.1222  loss_contrastive: 0.01427  loss_rpn_cls: 0.01586  loss_rpn_loc: 0.00904  total_val_loss: 0.2558  val_loss_box_reg: 0.1243  val_loss_cls: 0.09395  val_loss_contrastive: 0.01423  val_loss_rpn_cls: 0.01675  val_loss_rpn_loc: 0.006577  time: 0.9439  data_time: 0.2132  lr: 4e-05  max_mem: 7902M
+[03/20 22:32:36] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:32:37] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:32:37] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:32:37] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:32:37] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:32:40] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0012 s/iter. Inference: 0.1416 s/iter. Eval: 0.0002 s/iter. Total: 0.1430 s/iter. ETA=0:00:29
+[03/20 22:32:45] d2.evaluation.evaluator INFO: Inference done 46/215. Dataloading: 0.0015 s/iter. Inference: 0.1429 s/iter. Eval: 0.0002 s/iter. Total: 0.1447 s/iter. ETA=0:00:24
+[03/20 22:32:50] d2.evaluation.evaluator INFO: Inference done 82/215. Dataloading: 0.0015 s/iter. Inference: 0.1418 s/iter. Eval: 0.0002 s/iter. Total: 0.1436 s/iter. ETA=0:00:19
+[03/20 22:32:55] d2.evaluation.evaluator INFO: Inference done 117/215. Dataloading: 0.0017 s/iter. Inference: 0.1423 s/iter. Eval: 0.0002 s/iter. Total: 0.1442 s/iter. ETA=0:00:14
+[03/20 22:33:00] d2.evaluation.evaluator INFO: Inference done 152/215. Dataloading: 0.0016 s/iter. Inference: 0.1423 s/iter. Eval: 0.0002 s/iter. Total: 0.1442 s/iter. ETA=0:00:09
+[03/20 22:33:05] d2.evaluation.evaluator INFO: Inference done 187/215. Dataloading: 0.0016 s/iter. Inference: 0.1425 s/iter. Eval: 0.0002 s/iter. Total: 0.1443 s/iter. ETA=0:00:04
+[03/20 22:33:10] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.604593 (0.145736 s / iter per device, on 4 devices)
+[03/20 22:33:10] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.142786 s / iter per device, on 4 devices)
+[03/20 22:33:10] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:33:10] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:33:10] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:33:11] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.938 | 25.282 | 2.791  | 0.000 | 5.028 | 11.257 |
+[03/20 22:33:11] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:33:11] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:33:11] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:33:11] d2.evaluation.testing INFO: copypaste: 7.9376,25.2817,2.7908,0.0000,5.0276,11.2572
+[03/20 22:33:23] d2.utils.events INFO:  eta: 0:06:15  iter: 4819  total_loss: 0.2678  loss_cls: 0.1128  loss_box_reg: 0.118  loss_contrastive: 0.01416  loss_rpn_cls: 0.01414  loss_rpn_loc: 0.009557  time: 0.9439  data_time: 0.1910  lr: 4e-05  max_mem: 7902M
+[03/20 22:33:43] d2.utils.events INFO:  eta: 0:05:57  iter: 4839  total_loss: 0.2587  loss_cls: 0.1064  loss_box_reg: 0.1229  loss_contrastive: 0.01423  loss_rpn_cls: 0.01199  loss_rpn_loc: 0.008809  time: 0.9439  data_time: 0.2075  lr: 4e-05  max_mem: 7902M
+[03/20 22:34:02] d2.utils.events INFO:  eta: 0:05:38  iter: 4859  total_loss: 0.2422  loss_cls: 0.1011  loss_box_reg: 0.1074  loss_contrastive: 0.01415  loss_rpn_cls: 0.01349  loss_rpn_loc: 0.008559  time: 0.9439  data_time: 0.1933  lr: 4e-05  max_mem: 7902M
+[03/20 22:34:21] d2.utils.events INFO:  eta: 0:05:19  iter: 4879  total_loss: 0.275  loss_cls: 0.1104  loss_box_reg: 0.1196  loss_contrastive: 0.01422  loss_rpn_cls: 0.01498  loss_rpn_loc: 0.009162  time: 0.9439  data_time: 0.1935  lr: 4e-05  max_mem: 7902M
+[03/20 22:34:40] d2.utils.events INFO:  eta: 0:05:01  iter: 4899  total_loss: 0.2796  loss_cls: 0.1159  loss_box_reg: 0.1276  loss_contrastive: 0.01424  loss_rpn_cls: 0.01316  loss_rpn_loc: 0.009864  total_val_loss: 0.2702  val_loss_box_reg: 0.1069  val_loss_cls: 0.1204  val_loss_contrastive: 0.01418  val_loss_rpn_cls: 0.02108  val_loss_rpn_loc: 0.007644  time: 0.9439  data_time: 0.1940  lr: 4e-05  max_mem: 7902M
+[03/20 22:34:59] d2.utils.events INFO:  eta: 0:04:42  iter: 4919  total_loss: 0.253  loss_cls: 0.1058  loss_box_reg: 0.1168  loss_contrastive: 0.01412  loss_rpn_cls: 0.0128  loss_rpn_loc: 0.008348  time: 0.9439  data_time: 0.1881  lr: 4e-05  max_mem: 7902M
+[03/20 22:35:19] d2.utils.events INFO:  eta: 0:04:23  iter: 4939  total_loss: 0.2715  loss_cls: 0.1096  loss_box_reg: 0.1161  loss_contrastive: 0.01411  loss_rpn_cls: 0.01573  loss_rpn_loc: 0.009694  time: 0.9439  data_time: 0.2085  lr: 4e-05  max_mem: 7902M
+[03/20 22:35:38] d2.utils.events INFO:  eta: 0:04:05  iter: 4959  total_loss: 0.2851  loss_cls: 0.1122  loss_box_reg: 0.127  loss_contrastive: 0.01416  loss_rpn_cls: 0.01465  loss_rpn_loc: 0.01183  time: 0.9439  data_time: 0.1908  lr: 4e-05  max_mem: 7902M
+[03/20 22:35:56] d2.utils.events INFO:  eta: 0:03:46  iter: 4979  total_loss: 0.271  loss_cls: 0.1133  loss_box_reg: 0.1162  loss_contrastive: 0.01421  loss_rpn_cls: 0.01471  loss_rpn_loc: 0.009565  time: 0.9438  data_time: 0.1954  lr: 4e-05  max_mem: 7902M
+[03/20 22:36:08] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0004991.pth
+[03/20 22:36:17] d2.utils.events INFO:  eta: 0:03:28  iter: 4999  total_loss: 0.2797  loss_cls: 0.1158  loss_box_reg: 0.1232  loss_contrastive: 0.01419  loss_rpn_cls: 0.01334  loss_rpn_loc: 0.009793  total_val_loss: 0.2003  val_loss_box_reg: 0.08616  val_loss_cls: 0.08165  val_loss_contrastive: 0.01407  val_loss_rpn_cls: 0.01188  val_loss_rpn_loc: 0.006565  time: 0.9439  data_time: 0.2112  lr: 4e-05  max_mem: 7902M
+[03/20 22:36:32] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:36:32] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:36:32] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:36:32] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:36:32] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:36:36] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0013 s/iter. Inference: 0.1372 s/iter. Eval: 0.0002 s/iter. Total: 0.1386 s/iter. ETA=0:00:28
+[03/20 22:36:41] d2.evaluation.evaluator INFO: Inference done 46/215. Dataloading: 0.0017 s/iter. Inference: 0.1432 s/iter. Eval: 0.0002 s/iter. Total: 0.1451 s/iter. ETA=0:00:24
+[03/20 22:36:46] d2.evaluation.evaluator INFO: Inference done 81/215. Dataloading: 0.0016 s/iter. Inference: 0.1425 s/iter. Eval: 0.0002 s/iter. Total: 0.1444 s/iter. ETA=0:00:19
+[03/20 22:36:51] d2.evaluation.evaluator INFO: Inference done 116/215. Dataloading: 0.0015 s/iter. Inference: 0.1429 s/iter. Eval: 0.0002 s/iter. Total: 0.1447 s/iter. ETA=0:00:14
+[03/20 22:36:56] d2.evaluation.evaluator INFO: Inference done 151/215. Dataloading: 0.0015 s/iter. Inference: 0.1426 s/iter. Eval: 0.0002 s/iter. Total: 0.1444 s/iter. ETA=0:00:09
+[03/20 22:37:02] d2.evaluation.evaluator INFO: Inference done 186/215. Dataloading: 0.0015 s/iter. Inference: 0.1429 s/iter. Eval: 0.0002 s/iter. Total: 0.1447 s/iter. ETA=0:00:04
+[03/20 22:37:06] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.665882 (0.146028 s / iter per device, on 4 devices)
+[03/20 22:37:06] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:30 (0.142999 s / iter per device, on 4 devices)
+[03/20 22:37:06] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:37:06] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:37:06] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:37:07] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.766 | 24.925 | 2.693  | 0.000 | 4.848 | 11.100 |
+[03/20 22:37:07] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:37:07] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:37:07] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:37:07] d2.evaluation.testing INFO: copypaste: 7.7661,24.9253,2.6929,0.0000,4.8484,11.1001
+[03/20 22:37:11] d2.utils.events INFO:  eta: 0:03:09  iter: 5019  total_loss: 0.2379  loss_cls: 0.09833  loss_box_reg: 0.1064  loss_contrastive: 0.01415  loss_rpn_cls: 0.0129  loss_rpn_loc: 0.007991  time: 0.9439  data_time: 0.2007  lr: 4e-05  max_mem: 7902M
+[03/20 22:37:31] d2.utils.events INFO:  eta: 0:02:50  iter: 5039  total_loss: 0.2583  loss_cls: 0.1049  loss_box_reg: 0.1189  loss_contrastive: 0.01413  loss_rpn_cls: 0.01282  loss_rpn_loc: 0.008982  time: 0.9439  data_time: 0.2043  lr: 4e-05  max_mem: 7902M
+[03/20 22:37:50] d2.utils.events INFO:  eta: 0:02:31  iter: 5059  total_loss: 0.2568  loss_cls: 0.108  loss_box_reg: 0.1205  loss_contrastive: 0.0142  loss_rpn_cls: 0.01227  loss_rpn_loc: 0.009334  time: 0.9439  data_time: 0.1891  lr: 4e-05  max_mem: 7902M
+[03/20 22:38:08] d2.utils.events INFO:  eta: 0:02:13  iter: 5079  total_loss: 0.2533  loss_cls: 0.1049  loss_box_reg: 0.1097  loss_contrastive: 0.01413  loss_rpn_cls: 0.01198  loss_rpn_loc: 0.008695  time: 0.9438  data_time: 0.1830  lr: 4e-05  max_mem: 7902M
+[03/20 22:38:28] d2.utils.events INFO:  eta: 0:01:54  iter: 5099  total_loss: 0.2582  loss_cls: 0.1068  loss_box_reg: 0.118  loss_contrastive: 0.01416  loss_rpn_cls: 0.01092  loss_rpn_loc: 0.008662  total_val_loss: 0.2696  val_loss_box_reg: 0.08813  val_loss_cls: 0.1253  val_loss_contrastive: 0.01415  val_loss_rpn_cls: 0.02986  val_loss_rpn_loc: 0.01217  time: 0.9438  data_time: 0.1871  lr: 4e-05  max_mem: 7902M
+[03/20 22:38:47] d2.utils.events INFO:  eta: 0:01:36  iter: 5119  total_loss: 0.2525  loss_cls: 0.1068  loss_box_reg: 0.1172  loss_contrastive: 0.01419  loss_rpn_cls: 0.01385  loss_rpn_loc: 0.008474  time: 0.9438  data_time: 0.1871  lr: 4e-05  max_mem: 7902M
+[03/20 22:39:06] d2.utils.events INFO:  eta: 0:01:17  iter: 5139  total_loss: 0.2636  loss_cls: 0.1086  loss_box_reg: 0.1163  loss_contrastive: 0.01418  loss_rpn_cls: 0.01308  loss_rpn_loc: 0.01031  time: 0.9437  data_time: 0.1889  lr: 4e-05  max_mem: 7902M
+[03/20 22:39:24] d2.utils.events INFO:  eta: 0:00:59  iter: 5159  total_loss: 0.2616  loss_cls: 0.1112  loss_box_reg: 0.1163  loss_contrastive: 0.01412  loss_rpn_cls: 0.01424  loss_rpn_loc: 0.008912  time: 0.9437  data_time: 0.1869  lr: 4e-05  max_mem: 7902M
+[03/20 22:39:43] d2.utils.events INFO:  eta: 0:00:40  iter: 5179  total_loss: 0.2827  loss_cls: 0.1164  loss_box_reg: 0.1242  loss_contrastive: 0.01416  loss_rpn_cls: 0.01658  loss_rpn_loc: 0.01065  time: 0.9437  data_time: 0.1819  lr: 4e-05  max_mem: 7902M
+[03/20 22:40:02] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_0005199.pth
+[03/20 22:40:03] d2.utils.events INFO:  eta: 0:00:22  iter: 5199  total_loss: 0.2672  loss_cls: 0.1053  loss_box_reg: 0.1198  loss_contrastive: 0.01409  loss_rpn_cls: 0.0141  loss_rpn_loc: 0.009064  total_val_loss: 0.2446  val_loss_box_reg: 0.07593  val_loss_cls: 0.1108  val_loss_contrastive: 0.01394  val_loss_rpn_cls: 0.03395  val_loss_rpn_loc: 0.00999  time: 0.9436  data_time: 0.1863  lr: 4e-05  max_mem: 7902M
+[03/20 22:40:22] d2.utils.events INFO:  eta: 0:00:03  iter: 5219  total_loss: 0.2851  loss_cls: 0.1154  loss_box_reg: 0.1278  loss_contrastive: 0.01408  loss_rpn_cls: 0.01483  loss_rpn_loc: 0.01037  time: 0.9436  data_time: 0.1944  lr: 4e-05  max_mem: 7902M
+[03/20 22:40:27] fvcore.common.checkpoint INFO: Saving checkpoint to ./output/model_final.pth
+[03/20 22:40:28] d2.utils.events INFO:  eta: 0:00:00  iter: 5223  total_loss: 0.279  loss_cls: 0.112  loss_box_reg: 0.1264  loss_contrastive: 0.01408  loss_rpn_cls: 0.01413  loss_rpn_loc: 0.008769  time: 0.9437  data_time: 0.2084  lr: 4e-05  max_mem: 7902M
+[03/20 22:40:28] d2.engine.hooks INFO: Overall training speed: 5222 iterations in 1:22:07 (0.9437 s / it)
+[03/20 22:40:28] d2.engine.hooks INFO: Total training time: 1:37:46 (0:15:38 on hooks)
+[03/20 22:40:28] d2.data.datasets.coco INFO: Loaded 859 images in COCO format from ../../coco/annotations/anno_valid.json
+[03/20 22:40:28] d2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1000, sample_style='choice')]
+[03/20 22:40:28] d2.data.common INFO: Serializing 859 elements to byte tensors and concatenating them all ...
+[03/20 22:40:28] d2.data.common INFO: Serialized dataset takes 0.33 MiB
+[03/20 22:40:28] d2.evaluation.evaluator INFO: Start inference on 215 batches
+[03/20 22:40:31] d2.evaluation.evaluator INFO: Inference done 11/215. Dataloading: 0.0014 s/iter. Inference: 0.1475 s/iter. Eval: 0.0002 s/iter. Total: 0.1492 s/iter. ETA=0:00:30
+[03/20 22:40:36] d2.evaluation.evaluator INFO: Inference done 46/215. Dataloading: 0.0014 s/iter. Inference: 0.1421 s/iter. Eval: 0.0002 s/iter. Total: 0.1438 s/iter. ETA=0:00:24
+[03/20 22:40:41] d2.evaluation.evaluator INFO: Inference done 82/215. Dataloading: 0.0014 s/iter. Inference: 0.1413 s/iter. Eval: 0.0002 s/iter. Total: 0.1430 s/iter. ETA=0:00:19
+[03/20 22:40:46] d2.evaluation.evaluator INFO: Inference done 117/215. Dataloading: 0.0014 s/iter. Inference: 0.1421 s/iter. Eval: 0.0002 s/iter. Total: 0.1438 s/iter. ETA=0:00:14
+[03/20 22:40:51] d2.evaluation.evaluator INFO: Inference done 153/215. Dataloading: 0.0014 s/iter. Inference: 0.1416 s/iter. Eval: 0.0002 s/iter. Total: 0.1433 s/iter. ETA=0:00:08
+[03/20 22:40:56] d2.evaluation.evaluator INFO: Inference done 188/215. Dataloading: 0.0014 s/iter. Inference: 0.1418 s/iter. Eval: 0.0002 s/iter. Total: 0.1435 s/iter. ETA=0:00:03
+[03/20 22:41:00] d2.evaluation.evaluator INFO: Total inference time: 0:00:30.418585 (0.144850 s / iter per device, on 4 devices)
+[03/20 22:41:00] d2.evaluation.evaluator INFO: Total inference pure compute time: 0:00:29 (0.141835 s / iter per device, on 4 devices)
+[03/20 22:41:01] d2.evaluation.coco_evaluation INFO: Preparing results for COCO format ...
+[03/20 22:41:01] d2.evaluation.coco_evaluation INFO: Saving results to ./output/inference/coco_instances_results.json
+[03/20 22:41:01] d2.evaluation.coco_evaluation INFO: Evaluating predictions with official COCO API...
+[03/20 22:41:02] d2.evaluation.coco_evaluation INFO: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl   |
+|:-----:|:------:|:------:|:-----:|:-----:|:------:|
+| 7.844 | 24.961 | 2.651  | 0.000 | 4.865 | 11.183 |
+[03/20 22:41:02] d2.engine.defaults INFO: Evaluation results for coco_my_val in csv format:
+[03/20 22:41:02] d2.evaluation.testing INFO: copypaste: Task: bbox
+[03/20 22:41:02] d2.evaluation.testing INFO: copypaste: AP,AP50,AP75,APs,APm,APl
+[03/20 22:41:02] d2.evaluation.testing INFO: copypaste: 7.8437,24.9609,2.6509,0.0000,4.8652,11.1831
